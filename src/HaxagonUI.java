@@ -13,7 +13,6 @@ public class HaxagonUI extends JPanel {
 	private ImageIcon bgIcon = new ImageIcon(getClass().getResource(
 			"Pic/haxagonMainmenu.png"));
 
-
 	private ImageIcon startIcon = new ImageIcon(getClass().getResource(
 			"Pic/startIcon.png"));
 	private ImageIcon startRollOverIcon = new ImageIcon(getClass().getResource(
@@ -35,9 +34,7 @@ public class HaxagonUI extends JPanel {
 
 	private JLabel bgLabel = new JLabel(bgIcon);
 
-	// admin page
-
-	// login page
+	private PopupUI popup;
 
 	public HaxagonUI() {
 
@@ -49,7 +46,6 @@ public class HaxagonUI extends JPanel {
 		aboutButton.setRolloverIcon(aboutRollOverIcon);
 		exitButton.setRolloverIcon(exitRollOverIcon);
 
-
 		setSize(800, 600);
 
 		createFirstTitle();
@@ -59,14 +55,13 @@ public class HaxagonUI extends JPanel {
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					UIManager.setLookAndFeel(UIManager
+							.getSystemLookAndFeelClassName());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
-
-						new PopupUI().setVisible(true);
-				
-		
+				popup = new PopupUI();
+				popup.setVisible(true);
 			}
 		});
 
@@ -102,8 +97,6 @@ public class HaxagonUI extends JPanel {
 			}
 		});
 
-	
-
 	}
 
 	public void createFirstTitle() {
@@ -135,7 +128,11 @@ public class HaxagonUI extends JPanel {
 		x.setFocusPainted(false);
 	}
 
-	public static void main(String[] args) {
-		new HaxagonUI();
+	public int getP1() {
+		return popup.choose1;
+	}
+	
+	public int getP2() {
+		return popup.choose2;
 	}
 }

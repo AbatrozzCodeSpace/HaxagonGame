@@ -1,5 +1,4 @@
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,7 +20,7 @@ public class Board extends JFrame {
 			Color.yellow };
 
 	private JPanel boardPanel;
-	private JPanel powerPanel;
+	private HaxagonUI firstFrame;
 	private Hex selected;
 
 	private LinkedList<Hex> hexList = new LinkedList<Hex>();
@@ -29,13 +28,14 @@ public class Board extends JFrame {
 	
 	private static Move move;
 	
-	public Board(int size, State state) {
+	public Board(int size, State state, HaxagonUI ui) {
 		this.state = state;
+		firstFrame = ui;
 		// ------------- CREATE HEXAGON -------------
 		int x = ((3 * size + 2) * r) / 2, y = start;
 		for (int n = -size + 1; n < size; n++) {
 			int jIndex = n + 4;
-			int xoffset = 60 * n + x;
+			int xoffset = 60 * n + x + 50;
 			int maxHeight = 2 * size - Math.abs(n) - 1;
 			for (int h = 0; h < maxHeight; h++) {
 				int iIndex = 2 * size - maxHeight + 2 * h - 1;
@@ -136,20 +136,13 @@ public class Board extends JFrame {
 			}
 		};
 		boardPanel.addMouseListener(ma);
-		boardPanel.addMouseMotionListener(ma);
 		// ------------- END MOUSE ACTION -------------
 
-		// ------------- CREATE POWER ------------
-		
-		// ------------- END CREATE POWER ------------
-		
-//		setLayout(new BorderLayout());
-//		add(boardPanel, BorderLayout.NORTH);
-		add(boardPanel);
+		add(firstFrame);
 		setBackground(Color.darkGray);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setFocusable(false);
-		setSize(700, 700);
+		setSize(800, 700);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
@@ -179,5 +172,12 @@ public class Board extends JFrame {
 	
 	public static Move getMove() {
 		return move;
+	}
+	
+	public void gotoMain() {
+		remove(firstFrame);
+		add(boardPanel);
+		validate();
+		repaint();
 	}
 }

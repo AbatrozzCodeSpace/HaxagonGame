@@ -18,35 +18,37 @@ public class Hexxagon {
 	
 	public static Player p1, p2;
 	
-	Arbiter arbi;
-	Thread arbiThread;
+	static Thread hexxThread;
 	
-	public Hexxagon() {
-		State s = new State();
-		Board board = new Board(5, s);
-		GameLoopState gameLoop = new GameLoopState();
-	
-		Player p1 = getPlayer("red");
-		Player p2 = getPlayer("blue");
-
-		// The last two argument to Arbiter are delay times before
-		// allowing a player to make a move, so you have time to see
-		// what just happened.
-		arbi = new Arbiter(p1, p2, 1000, 1000, gameLoop, s, board);
-
-		System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
-		System.out.println("End the game by closing the game window.");
-		arbiThread = new Thread(new Runnable() {
+	public static void main(String args[]) {
+		hexxThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
+				State s = new State();
+				HaxagonUI ui = new HaxagonUI();
+				Board board = new Board(5, s, ui);
+				synchronized (s) {
+					try {
+						s.wait();
+					} catch (InterruptedException e) {
+					}
+				}
+				board.gotoMain();
+				GameLoopState gameLoop = new GameLoopState();
+			
+				System.out.println("P1="+ui.getP1()+" P2="+ui.getP2());
+				
+				Player p1 = getPlayer(ui.getP1());
+				Player p2 = getPlayer(ui.getP2());
+
+				Arbiter arbi = new Arbiter(p1, p2, 1000, 1000, gameLoop, s, board);
+
+				System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
+				System.out.println("End the game by closing the game window.");
 				arbi.showGame();
 			}
 		});
-		arbiThread.start();
-	}
-	
-	public static void main(String args[]) {
-		new Hexxagon();
+		hexxThread.start();
 	}
 	public static Player getPlayer(int player) {
 		Player p;
