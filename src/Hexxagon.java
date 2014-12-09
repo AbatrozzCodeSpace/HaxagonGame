@@ -5,12 +5,19 @@
 
 /* The actual game... */
 
-import java.awt.Dimension;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Hexxagon {
+	public static final int INVALID = -1;
+	public static final int BLANK = 0;
+	public static final int RED = 1;
+	public static final int BLUE = 2;
+	
 	public static void main(String args[]) {
-		AppWindow appWin = new AppWindow(new Board(5));
+		State s = new State();
+		Board board = new Board(5);
 		GameLoopState gameLoop = new GameLoopState();
 	
 		Player p1 = getPlayer("red");
@@ -19,7 +26,7 @@ public class Hexxagon {
 		// The last two argument to Arbiter are delay times before
 		// allowing a player to make a move, so you have time to see
 		// what just happened.
-		Arbiter a = new Arbiter(p1, p2, 1000, 1000, appWin, gameLoop);
+		Arbiter a = new Arbiter(p1, p2, 1000, 1000, gameLoop, s, board);
 
 		System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
 		System.out.println("End the game by closing the game window.");

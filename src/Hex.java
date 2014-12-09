@@ -15,7 +15,7 @@ public class Hex extends Polygon {
 		this.j = j;
 		this.xCenter = xCenter;
 		this.yCenter = yCenter;
-		value = Engine.BLANK;
+		value = Hexxagon.BLANK;
 		bg = Board.adjColor[0];
 	}
 	
