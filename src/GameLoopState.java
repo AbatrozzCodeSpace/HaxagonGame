@@ -6,9 +6,5 @@ public class GameLoopState {
 		GAME_OVER,
 	}
 	
-	public GameState state;
-	
-	public GameLoopState() {
-		state = GameState.IN_GAME;
-	}
+	public static GameState state;
 }
