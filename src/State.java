@@ -256,6 +256,16 @@ public class State {
 	// apparently, move was not succesful
 	return null;
     }
+    public State tryDoubleMove(Move m,Move m2){
+    	State newstate = new State(this);
+
+    	if (newstate.applyMove(m))
+    	    if(newstate.applyMove(m2))
+    	    	return newstate;
+    	
+    	// apparently, move was not succesful
+    	return null;
+    }
 
     /* find all moves from a given Hexpos */
     public MyList findMovesFrom(Hexpos begin, String player) {
@@ -381,6 +391,9 @@ public class State {
 
     public MyList findMoves() {
 	return findMoves(turn);
+    }
+    public MyList findMovesByString(String s){
+    	return findMoves(s);
     }
 
     /* paint a state */
