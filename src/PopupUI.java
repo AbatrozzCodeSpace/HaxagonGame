@@ -23,12 +23,11 @@ import javax.swing.UIManager;
  * 
  */
 public class PopupUI extends JFrame {
-	private Container container;
 	private JButton buttonSelect = new JButton("Select");
 
-	public PopupUI(Container pane) {
+	public PopupUI() {
 		super("Pick an implementation for player");
-		container=pane;
+
 		setPreferredSize(new Dimension(590,120));
 		setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		setResizable(false);
@@ -150,7 +149,7 @@ public class PopupUI extends JFrame {
 
 			@Override
 			public void run() {
-				new PopupUI(null).setVisible(true);
+				new PopupUI().setVisible(true);
 			}
 		});
 	}

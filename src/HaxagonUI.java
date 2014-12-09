@@ -4,10 +4,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HaxagonUI extends JFrame {
+public class HaxagonUI extends JPanel {
 
 	private int currentPage = 0; // 0 = Title 1 = admin 2 =login page
-	private Container pane = getContentPane();
+
 
 	// firstPage
 	private ImageIcon CP38 = new ImageIcon(getClass().getResource(
@@ -51,14 +51,13 @@ public class HaxagonUI extends JFrame {
 		aboutButton.setRolloverIcon(aboutRollOverIcon);
 		exitButton.setRolloverIcon(exitRollOverIcon);
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Haxagon");
+
 		setSize(800, 600);
 
 		createFirstTitle();
 
 		setVisible(true);
-		setResizable(false);
+
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -67,7 +66,7 @@ public class HaxagonUI extends JFrame {
 					ex.printStackTrace();
 				}
 
-						new PopupUI(pane).setVisible(true);
+						new PopupUI().setVisible(true);
 				
 		
 			}
@@ -87,7 +86,7 @@ public class HaxagonUI extends JFrame {
 
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pane.repaint();
+
 				String[] choices = { "Yes", "No" };
 				int response = JOptionPane.showOptionDialog(null // Center in
 																	// window.
@@ -101,23 +100,23 @@ public class HaxagonUI extends JFrame {
 				);
 				if (response == 0)
 					System.exit(0);
-				pane.repaint();
+
 			}
 		});
 
-		setLocationRelativeTo(null);
+	
 
 	}
 
 	public void createFirstTitle() {
 		currentPage = 0;
-		pane.removeAll();
-		pane.add(startButton);
-		pane.add(aboutButton);
-		pane.add(exitButton);
+		removeAll();
+		add(startButton);
+		add(aboutButton);
+		add(exitButton);
 
-		pane.add(bgLabel);
-		pane.add(new JLabel());
+		add(bgLabel);
+		add(new JLabel());
 		Dimension size = startButton.getPreferredSize();
 		startButton.setBounds(getWidth() / 2 - size.width + 55, 380,
 				size.width, size.height);
@@ -130,7 +129,7 @@ public class HaxagonUI extends JFrame {
 		size = bgLabel.getPreferredSize();
 		bgLabel.setBounds(0, 0, size.width, size.height);
 
-		pane.repaint();
+		repaint();
 	}
 
 	public void killBorder(JButton x) {
