@@ -83,6 +83,7 @@ public class Hexpos {
     }
 
     /* get a list of all neighbouring positions */
+    
     public MyList neighbours() {
 
 	// first create a list of neighbours

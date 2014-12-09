@@ -56,6 +56,7 @@ public class State {
 	    owner.put(it.next(), null);
 	}
 
+
 	// fill in the beginning positions of both players
 	owner.put(new Hexpos(1, 5), "blue");
 	owner.put(new Hexpos(13, 1), "blue");
@@ -71,6 +72,49 @@ public class State {
 	turn = "red";
     }
 
+	public String toString(){
+		String tmp = "";
+		for (int r = 1; r <= 17; r++) { // for every row
+			int c = ((r % 2 == 0) ? 2 : 1); // what col to start?
+			for (; c <= 9; c += 2) {
+				Hexpos h = new Hexpos(r, c);
+				if (h.onBoard()){
+				  	tmp += "[ " + h.hashCode() + " : " + owner(h ) + "] " ;
+				
+				}
+			}
+		}
+		return tmp;
+		
+	}
+
+	public int canWalk(String side, Hexpos pos){
+		// 0 someone there's 1 empty but cant 2 empty and can
+		State state = this;
+		if(side != "red" && side != "blue")
+			return -1;
+		if(state.owner(pos) != null)
+			return 0;
+		MyList walkArea = pos.neighbours();
+		for(Object tmp : walkArea){
+			if(state.owner((Hexpos)tmp) == side)
+				return  2;
+		}
+		return 1;
+	}
+	public int canJump(String side, Hexpos pos){
+		State state = this;
+		if(side != "red" && side != "blue")
+			return -1;
+		if(state.owner(pos) != null)
+			return 0;
+		MyList jumpArea = pos.jumpNeighbours();
+		for(Object tmp : jumpArea){
+			if(state.owner((Hexpos)tmp) == side)
+				return  2;
+		}
+		return 1;
+	}
     public int getnEmpty() {
 	return ((Integer) nSquares.get(null)).intValue();
     }
@@ -308,6 +352,32 @@ public class State {
 
 	return moves;
     }
+
+	public Move findRandomMove(String player) {
+	// Check if player is valid (so we don't have to worry about
+	// null pointers later).
+		if (player == null || ! (player.equals("red") ||
+									player.equals("blue")))
+			return null;
+
+		MyList moves = new MyList();
+
+		// Iterate over all Hexpos's
+		Set set = owner.keySet();
+
+		Iterator it = set.iterator();
+		while(it.hasNext()) {
+			Hexpos hp = (Hexpos) it.next();
+			MyList movesTo = findMovesTo(hp, player);
+			if (movesTo != null)
+			   moves.addAll(findMovesTo(hp, player));
+			}
+			if(moves.size()==0){
+				return null;
+		}
+		int random = (int)(Math.random()*moves.size());
+		return (Move) moves.get(random);
+	}
 
     public MyList findMoves() {
 	return findMoves(turn);

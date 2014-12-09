@@ -10,7 +10,7 @@
 import java.io.*;
 
 public class EvalMany {
-    public static void main(String args[]) {
+    /* public static void main(String args[]) {
 	Player p1 = getPlayer("red");
 	Player p2 = getPlayer("blue");
 	
@@ -38,7 +38,7 @@ public class EvalMany {
 	System.out.println("Blue wins: " + blueWins);
 	System.out.println("Draw: " + draw);
 	
-    }
+    }*/
     
     private static Player getPlayer(String player) {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
