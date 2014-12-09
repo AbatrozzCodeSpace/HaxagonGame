@@ -8,23 +8,36 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class AppWindow extends Frame {
-    State state;
+	State state;
+	GameLoopState gameLoop;
 
-    public AppWindow(State s) {
-	state = s;
-	addWindowListener(new WindowAdapter() {
-		public void windowClosing(WindowEvent we) {
-		    System.exit(0);
-		}
-	    });
-    }
+	public AppWindow() {
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+	}
 
-    public void paint(Graphics g) {
-	// call State's paint
-    	state.paint(g);
-    }
+	public AppWindow(State s) {
+		state = s;
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		});
+	}
 
-    public void setState(State s) {
-	state = s;
-    }
-}
+	public void paint(Graphics g) {
+		// call State's paint
+		state.paint(g);
+	}
+
+	public void setState(State s) {
+		state = s;
+	}
+	
+	public void setGameLoopState( GameLoopState gameLoop ) {
+		this.gameLoop = gameLoop;
+	}
+} 
