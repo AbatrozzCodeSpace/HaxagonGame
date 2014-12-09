@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class MixPlayer implements Player{
 	MonteCarloPlayer mc;
@@ -8,7 +9,6 @@ public class MixPlayer implements Player{
 		this.mp = new MinimaxPlayer(2);
     }
 
-	@Override
 	public Move chooseMove(State s) {
 		if(s.getnBlue()+s.getnRed()<25){
 			return mp.chooseMove(s);

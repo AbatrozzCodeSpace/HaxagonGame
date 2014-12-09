@@ -76,6 +76,8 @@ public class Hexxagon {
 			return new ParkMinimaxPlayer(2, 100, 50, 40, 25);
 		case 7:
 			return new MonteCarloPlayer(0,1000);
+		case 8:
+			return new MewPlayer(2);
 		default:
 			return new InteractivePlayer();
 		}
@@ -110,7 +112,7 @@ public class Hexxagon {
 				continue;
 			}
 
-		} while (!(choice > 0 && choice < 8));
+		} while (!(choice > 0 && choice <9));
 
 		Player p = getPlayer(choice);
 
