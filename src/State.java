@@ -7,6 +7,7 @@
 
 import java.util.*;
 import java.awt.*;
+
 import javax.swing.*;
 public class State {
     // We store the state in a hash with the Hexpos's as keys and their
@@ -308,6 +309,30 @@ public class State {
 
 	return moves;
     }
+    
+    public Move findRandomMove(String player) {
+    	// Check if player is valid (so we don't have to worry about
+    	// null pointers later).
+    	if (player == null || ! (player.equals("red") || 
+    			         player.equals("blue")))
+    	    return null;
+
+    	MyList moves = new MyList();
+
+    	// Iterate over all Hexpos's
+    	Set set = owner.keySet();
+    	
+    	Iterator it = set.iterator();
+    	while(it.hasNext()) {
+    	    Hexpos hp = (Hexpos) it.next();
+    	    MyList movesTo = findMovesTo(hp, player);
+    	    if (movesTo != null)
+    		moves.addAll(findMovesTo(hp, player));
+    	}
+    	
+    	int random = (int)(Math.random()*moves.size());
+    	return (Move) moves.get(random);
+        }
 
     public MyList findMoves() {
 	return findMoves(turn);
