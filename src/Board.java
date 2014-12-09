@@ -1,5 +1,6 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -8,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,11 +34,17 @@ public class Board extends JFrame {
 	private State state;
 	
 	private static Move move;
-	
+	private ImageIcon bgIcon = new ImageIcon(getClass().getResource(
+			"Pic/space_800_700.png"));
+	private ImageIcon blueBall = new ImageIcon(getClass().getResource(
+			"Pic/WaterBall.png"));
+	private ImageIcon redBall = new ImageIcon(getClass().getResource(
+			"Pic/FireBall.png"));
 	private int scoreR;
 	private int scoreB;
 	
 	public Board(int size, State state, HaxagonUI ui) {
+		getContentPane().add(new JLabel(bgIcon));
 		setTitle("Haxagon");
 		this.state = state;
 		firstFrame = ui;
@@ -72,7 +80,7 @@ public class Board extends JFrame {
 				g2.setStroke(new BasicStroke(3));
 				for (Hex h : hexList) {
 					g.setColor(h.getBg()); // color for background
-					g.fillPolygon(h);
+				g.fillPolygon(h);
 					g.setColor(Color.black); // color for line
 					g.drawPolygon(h);
 					int value = h.getValue();
@@ -81,6 +89,12 @@ public class Board extends JFrame {
 						int r = 25;
 						g.fillOval(h.getxCenter() - r, h.getyCenter() - r,
 								2 * r, 2 * r);
+						
+						JLabel label = teamColor[value-1]==Color.red ?  new JLabel(redBall):new JLabel(blueBall);
+					/*	getContentPane().add(label);
+						Dimension size = label.getPreferredSize();
+						label.setBounds(h.getxCenter()-r,h.getyCenter(),size.width,size.height);*/
+						
 						g.setColor(Color.black);
 						g.drawOval(h.getxCenter() - r, h.getyCenter() - r,
 								2 * r, 2 * r);
@@ -184,6 +198,7 @@ public class Board extends JFrame {
 		for (Hex h : hexList) {
 			h.setValue(state[h.getI()][h.getJ()]);
 		}
+		getContentPane().add(new JLabel(bgIcon));
 		repaint();
 	}
 	

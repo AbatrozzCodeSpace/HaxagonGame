@@ -64,6 +64,7 @@ public class Arbiter {
 			if (m == null || !s.legalMove(m)) {
 				System.err.println(s.whoseTurn()
 						+ " did not produce a legal move. Ending game.");
+				GameLoopState.effector.openEffect("charge.wav");
 				String[] choices = { "Restart Game", "Return to Title" };
 				int response = JOptionPane.showOptionDialog(null // Center in
 																	// window.

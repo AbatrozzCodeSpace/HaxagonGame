@@ -14,19 +14,19 @@ public class HaxagonUI extends JPanel {
 			"Pic/haxagonMainmenu.png"));
 
 	private ImageIcon startIcon = new ImageIcon(getClass().getResource(
-			"Pic/startIcon.png"));
+			"Pic/start.gif"));
 	private ImageIcon startRollOverIcon = new ImageIcon(getClass().getResource(
-			"Pic/startRollOverIcon.png"));
+			"Pic/startred.gif"));
 
 	private ImageIcon aboutIcon = new ImageIcon(getClass().getResource(
-			"Pic/aboutIcon.png"));
+			"Pic/aboutus.gif"));
 	private ImageIcon aboutRollOverIcon = new ImageIcon(getClass().getResource(
-			"Pic/aboutRollOver.png"));
+			"Pic/aboutusred.gif"));
 
 	private ImageIcon exitIcon = new ImageIcon(getClass().getResource(
-			"Pic/exitIcon.png"));
+			"Pic/exit.gif"));
 	private ImageIcon exitRollOverIcon = new ImageIcon(getClass().getResource(
-			"Pic/exitRollOver.png"));
+			"Pic/exitred.gif"));
 
 	private JButton startButton = new JButton(startIcon);
 	private JButton aboutButton = new JButton(aboutIcon);
@@ -37,7 +37,20 @@ public class HaxagonUI extends JPanel {
 	private PopupUI popup;
 
 	public HaxagonUI() {
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
+		Point hotSpot = new Point(0,0);
+		Image cus = toolkit.getImage(getClass().getResource("Pic/iconse.png"));
+		//Image curs = toolkit.getImage(getClass().getResource("Pic/Wand.png"));
+		//Cursor oriCursor = toolkit.createCustomCursor(curs, hotSpot, "wand"); 
+		//setCursor(oriCursor);
+	     Cursor GameCursor = toolkit.createCustomCursor(cus, hotSpot, "wand");  //this command is the killer
+	     startButton.setCursor(GameCursor);
+	     aboutButton.setCursor(GameCursor);
+	     exitButton.setCursor(GameCursor);
+
+
+		 
 		killBorder(startButton);
 		killBorder(aboutButton);
 		killBorder(exitButton);
@@ -114,13 +127,13 @@ public class HaxagonUI extends JPanel {
 		add(bgLabel);
 		add(new JLabel());
 		Dimension size = startButton.getPreferredSize();
-		startButton.setBounds(getWidth() / 2 - size.width + 55, 420,
+		startButton.setBounds(getWidth() / 2 - size.width + 130, 365,
 				size.width, size.height);
 		size = aboutButton.getPreferredSize();
-		aboutButton.setBounds(getWidth() / 2 - size.width + 55, 465,
+		aboutButton.setBounds(getWidth() / 2 - size.width + 100, 435,
 				size.width, size.height);
 		size = exitButton.getPreferredSize();
-		exitButton.setBounds(getWidth() / 2 - size.width + 55, 505, size.width,
+		exitButton.setBounds(getWidth() / 2 - size.width + 110, 505, size.width,
 				size.height);
 		size = bgLabel.getMaximumSize();
 		bgLabel.setBounds(0, 0, size.width, size.height);
