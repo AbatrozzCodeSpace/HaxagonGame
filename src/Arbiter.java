@@ -12,7 +12,9 @@ public class Arbiter {
     Player blue;
     int delayRed;
     int delayBlue;
-    State s;
+    State s; // this state is the data structure and painter
+    
+    GameLoopState gameLoopState; // this is the main state of the game
 
     public Arbiter (Player p1, Player p2, int d1, int d2) {
 	// create begin state
