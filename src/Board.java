@@ -24,9 +24,13 @@ public class Board extends JFrame {
 	private JPanel powerPanel;
 	private Hex selected;
 
-	public LinkedList<Hex> hexList = new LinkedList<Hex>();
-
-	public Board(int size) {
+	private LinkedList<Hex> hexList = new LinkedList<Hex>();
+	private State state;
+	
+	private static Move move;
+	
+	public Board(int size, State state) {
+		this.state = state;
 		// ------------- CREATE HEXAGON -------------
 		int x = ((3 * size + 2) * r) / 2, y = start;
 		for (int n = -size + 1; n < size; n++) {
@@ -86,12 +90,37 @@ public class Board extends JFrame {
 				for (int i = 0; i < hexList.size(); i++) {
 					Hex h1 = hexList.get(i);
 					if (h1.contains(p)) {
-						selected = h1;
-						for (Hex h2 : hexList) {
-							int distance = distance(h1, h2);
-							if (distance < 3)
-								h2.setBg(adjColor[distance]);
+						if(h1.getBg().equals(adjColor[0])) {
+							for (Hex h : hexList)
+								h.setBg(adjColor[0]);
+							System.out.println("selected "+h1);
+							selected = h1;
+							for (Hex h2 : hexList) {
+								int distance = distance(h1, h2);
+								if (distance < 3)
+									h2.setBg(adjColor[distance]);
+							}
+						} else {
+							State s = getGameState();
+							move = new Move(new Hexpos(selected.getI()+1, selected.getJ()+1),
+									 new Hexpos(h1.getI()+1, h1.getJ()+1),
+									 s.whoseTurn());
+							
+							if (s.legalMove(move)) {
+								System.out.println("move " + selected + " to "
+										+ h1);
+								synchronized (s) {
+									s.notifyAll();
+								}
+							} else {
+								System.out.println("Illegal move " + selected
+										+ " to " + h1);
+							}
+							selected = null;
+							for (Hex h : hexList)
+								h.setBg(adjColor[0]);
 						}
+						
 						break;
 					}
 				}
@@ -100,9 +129,6 @@ public class Board extends JFrame {
 
 			@Override
 			public void mouseReleased(MouseEvent m) {
-				selected = null;
-				for (Hex h : hexList)
-					h.setBg(adjColor[0]);
 			}
 
 			@Override
@@ -145,5 +171,13 @@ public class Board extends JFrame {
 		} else {
 			return (Math.abs(j1 - j2) + Math.abs(i2 - i1)) / 2;
 		}
+	}
+	
+	public State getGameState() {
+		return state;
+	}
+	
+	public static Move getMove() {
+		return move;
 	}
 }

@@ -101,8 +101,11 @@ public class PopupUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				String selectedBook = (String) typeList.getSelectedItem();
+				int t1 = typeList.getSelectedIndex()+1;
+				int t2 = typeList2.getSelectedIndex()+1;
 				JOptionPane.showMessageDialog(PopupUI.this,
 						"Player 1 is " + (String)typeList.getSelectedItem()+"\nPlayer 2 is "+(String)typeList2.getSelectedItem());
+			
 				container.removeAll();
 				container.repaint();
 			}

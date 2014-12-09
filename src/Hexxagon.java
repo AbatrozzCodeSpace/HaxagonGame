@@ -15,9 +15,12 @@ public class Hexxagon {
 	public static final int RED = 1;
 	public static final int BLUE = 2;
 	
-	public static void main(String args[]) {
+	Arbiter arbi;
+	Thread arbiThread;
+	
+	public Hexxagon() {
 		State s = new State();
-		Board board = new Board(5);
+		Board board = new Board(5, s);
 		GameLoopState gameLoop = new GameLoopState();
 	
 		Player p1 = getPlayer("red");
@@ -26,13 +29,21 @@ public class Hexxagon {
 		// The last two argument to Arbiter are delay times before
 		// allowing a player to make a move, so you have time to see
 		// what just happened.
-		Arbiter a = new Arbiter(p1, p2, 1000, 1000, gameLoop, s, board);
+		arbi = new Arbiter(p1, p2, 1000, 1000, gameLoop, s, board);
 
 		System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
 		System.out.println("End the game by closing the game window.");
-
-		a.showGame();
-
+		arbiThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				arbi.showGame();
+			}
+		});
+		arbiThread.start();
+	}
+	
+	public static void main(String args[]) {
+		new Hexxagon();
 	}
 
 	private static Player getPlayer(String player) {
@@ -70,7 +81,7 @@ public class Hexxagon {
 
 		switch (choice) {
 		case 1:
-			p = new InteractivePlayer();
+			p = new Human();
 			break;
 		case 2:
 			p = new RandomPlayer();
@@ -85,7 +96,7 @@ public class Hexxagon {
 			p = new MinimaxPlayer(2);
 			break;
 		default:
-			p = new InteractivePlayer();
+			p = new Human();
 		}
 
 		return p;

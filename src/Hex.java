@@ -45,7 +45,7 @@ public class Hex extends Polygon {
 	}
 	
 	public String toString() {
-		return "bind at "+i+" "+j+" has value = "+value; 
+		return i+" "+j; 
 	}
 
 	public Color getBg() {

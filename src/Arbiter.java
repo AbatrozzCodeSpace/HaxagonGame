@@ -5,7 +5,6 @@
 
 /* The Arbiter let's two players play against each other. */
 
-
 public class Arbiter {
 	Player red;
 	Player blue;
@@ -14,11 +13,12 @@ public class Arbiter {
 	State s; // this state is the data structure and painter
 	Board board;
 
-	public Arbiter(Player p1, Player p2, int d1, int d2, GameLoopState gameLoop, State s, Board b) {
+	public Arbiter(Player p1, Player p2, int d1, int d2,
+			GameLoopState gameLoop, State s, Board b) {
 		// create begin state
 		this.s = s;
 		this.board = b;
-		
+
 		// create players
 		red = p1;
 		blue = p2;
@@ -28,20 +28,14 @@ public class Arbiter {
 		// before a human player)
 		delayRed = d1;
 		delayBlue = d2;
-		
-//		this.appwin = appwin;
-//		appwin.setState(s);
-//		appwin.setGameLoopState(gameLoop);
+
+		// this.appwin = appwin;
+		// appwin.setState(s);
+		// appwin.setGameLoopState(gameLoop);
 	}
 
 	public void showGame() {
 		s.paint(board);
-		// create AppWindow
-		//AppWindow appwin = new AppWindow(s);
-		//appwin.setSize(new Dimension(500, 520));
-		//appwin.setTitle("Hexxagon");
-		//appwin.setVisible(true);
-
 		// Actually play the game
 
 		// as long as there are empty squares
@@ -54,14 +48,12 @@ public class Arbiter {
 					Thread.sleep(delayRed);
 				} catch (Exception e) {
 				}
-				;
 				m = red.chooseMove(s);
 			} else {
 				try {
 					Thread.sleep(delayBlue);
 				} catch (Exception e) {
 				}
-				;
 				m = blue.chooseMove(s);
 			}
 
