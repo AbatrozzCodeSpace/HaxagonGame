@@ -10,18 +10,17 @@
  */
 
 public class Move {
-    public Hexpos begin;
-    public Hexpos end;
-    public String player;
+	public Hexpos begin;
+	public Hexpos end;
+	public String player;
 
-    public Move(Hexpos b, Hexpos e, String p) {
-	begin = b;
-	end = e;
-	player = p;
-    }
+	public Move(Hexpos b, Hexpos e, String p) {
+		begin = b;
+		end = e;
+		player = p;
+	}
 
-    public String toString() {
-	return "[" + player + "]: " + begin + " -> " + end;
-    }
+	public String toString() {
+		return "[" + player + "]: " + begin + " -> " + end;
+	}
 }
-

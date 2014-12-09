@@ -18,37 +18,41 @@ public class Hexxagon {
 	
 	public static Player p1, p2;
 	
-	public static void main(String args[]) {
+	Arbiter arbi;
+	Thread arbiThread;
+	
+	public Hexxagon() {
+		State s = new State();
+		Board board = new Board(5, s);
 		GameLoopState gameLoop = new GameLoopState();
 	
-		new HaxagonUI();
-		
-	}
-	
-	public static void setPlayers( Player p1_, Player p2_ ) {
-		p1 = p1_;
-		p2 = p2_;
-		
-	}
-	
-	public static void goToBoard(Player p1, Player p2){
-		System.out.println(p1+" "+p2);
-		State s = new State();
-		Board board = new Board(5);
-		
-		Arbiter a = new Arbiter(p1, p2, 1000, 1000, null, s, board);
-		
+		Player p1 = getPlayer("red");
+		Player p2 = getPlayer("blue");
+
+		// The last two argument to Arbiter are delay times before
+		// allowing a player to make a move, so you have time to see
+		// what just happened.
+		arbi = new Arbiter(p1, p2, 1000, 1000, gameLoop, s, board);
 
 		System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
 		System.out.println("End the game by closing the game window.");
-
-		a.showGame();
+		arbiThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				arbi.showGame();
+			}
+		});
+		arbiThread.start();
+	}
+	
+	public static void main(String args[]) {
+		new Hexxagon();
 	}
 	public static Player getPlayer(int player) {
 		Player p;
 		switch (player) {
 		case 1:
-			p = new InteractivePlayer();
+			p = new Human();
 			break;
 		case 2:
 			p = new RandomPlayer();
@@ -63,7 +67,7 @@ public class Hexxagon {
 			p = new MinimaxPlayer(2);
 			break;
 		default:
-			p = new InteractivePlayer();
+			p = new Human();
 		}
 		return p;
 	}

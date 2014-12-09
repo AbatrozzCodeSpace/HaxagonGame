@@ -4,10 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+@SuppressWarnings("serial")
 public class HaxagonUI extends JPanel {
-
-	private int currentPage = 0; // 0 = Title 1 = admin 2 =login page
-
 
 	// firstPage
 	private ImageIcon CP38 = new ImageIcon(getClass().getResource(
@@ -109,7 +107,6 @@ public class HaxagonUI extends JPanel {
 	}
 
 	public void createFirstTitle() {
-		currentPage = 0;
 		removeAll();
 		add(startButton);
 		add(aboutButton);
@@ -139,6 +136,6 @@ public class HaxagonUI extends JPanel {
 	}
 
 	public static void main(String[] args) {
-		HaxagonUI game = new HaxagonUI();
+		new HaxagonUI();
 	}
 }
