@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.io.*;
+import java.util.HashMap;
 
 public class Hexxagon {
 	public static void main(String args[]) {
@@ -28,6 +29,20 @@ public class Hexxagon {
 			int player1 = Integer.parseInt(args[0]);
 			int player2 = Integer.parseInt(args[1]);
 			int loop = Integer.parseInt(args[2]);
+			HashMap winningPos = new HashMap();
+
+
+			for (int r = 1; r <= 17; r++) { // for every row
+				int c = ((r % 2 == 0) ? 2 : 1); // what col to start?
+				for (; c <= 9; c += 2) {
+					Hexpos h = new Hexpos(r, c);
+					if (h.onBoard()){
+						winningPos.put(h.hashCode(), 0);
+					
+					}
+				}
+			}
+
 			for(int i = 0; i < loop; i++){
 				Player p1 = getPlayer(player1);
 				Player p2 = getPlayer(player2);
@@ -35,7 +50,7 @@ public class Hexxagon {
 				appWin = new AppWindow();
 				gameLoop = new GameLoopState();
 				Arbiter a = new Arbiter(p1, p2, 1000, 1000, appWin, gameLoop, false);
-				a.showGame();
+				a.showGamePrint(winningPos);
 			}
 
 
