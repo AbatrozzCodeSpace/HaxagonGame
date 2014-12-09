@@ -21,7 +21,7 @@ public class AppWindow extends Frame {
 
     public void paint(Graphics g) {
 	// call State's paint
-	state.paint(g);
+    	state.paint(g);
     }
 
     public void setState(State s) {
