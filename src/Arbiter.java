@@ -134,6 +134,7 @@ public class Arbiter {
 		appwin.setSize(new Dimension(500, 520));
 		appwin.setTitle("Hexxagon");
 		appwin.setVisible(this.visibility);
+		// appwin.setVisible(true);
 
 		// Actually play the game
 
@@ -197,6 +198,8 @@ public class Arbiter {
 			out.println("(" + winner + ") : " + s);
 			out.close();
 		} catch(IOException e){}
+		if(winner == "draws")
+			return winner;
 		for(Object poi : s.ownees(winner)){
 			int hash = ((Hexpos)poi).hashCode();
 			checkWinningPos.put(hash, (int)checkWinningPos.get(hash) + 1);
