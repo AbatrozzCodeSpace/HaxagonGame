@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
@@ -24,7 +23,6 @@ public class Board extends JPanel {
 	public LinkedList<Hex> hexList = new LinkedList<Hex>();
 	
 	public Board(int size) {
-		
 		//------------- CREATE HEXAGON -------------
 		int x = ((3*size+2)*r)/2, y = start;
 		for(int n = -size+1; n < size; n++) {
@@ -115,23 +113,6 @@ public class Board extends JPanel {
 		setSize(700, 700);
 		//setLocationRelativeTo(null);
 		setVisible(true);
-	}
-
-	public int[][] init() {
-		int[][] binds = new int[17][9];
-		for (int[] row : binds)
-		    Arrays.fill(row, Hexxagon.INVALID);
-		for(int i = 0; i < hexList.size(); i++) {
-			Hex h = hexList.get(i);
-			int code = Hexxagon.BLANK;
-			if(i == 0 || i == 32 || i == 53 )
-				code = Hexxagon.RED;
-			else if( i == 4 || i == 25 || i == 57)
-				code = Hexxagon.BLUE;
-			binds[h.getI()][h.getJ()] = code;
-		}
-		updateBoard(binds);
-		return binds;
 	}
 
 	public void updateBoard(int[][] state) {

@@ -5,7 +5,6 @@
 
 /* The Arbiter let's two players play against each other. */
 
-import java.awt.*;
 
 public class Arbiter {
 	Player red;
@@ -13,12 +12,12 @@ public class Arbiter {
 	int delayRed;
 	int delayBlue;
 	State s; // this state is the data structure and painter
+	Board board;
 
-	AppWindow appwin;
-
-	public Arbiter(Player p1, Player p2, int d1, int d2, AppWindow appwin, GameLoopState gameLoop) {
+	public Arbiter(Player p1, Player p2, int d1, int d2, GameLoopState gameLoop, State s, Board b) {
 		// create begin state
-		s = new State();
+		this.s = s;
+		this.board = b;
 		
 		// create players
 		red = p1;
@@ -30,18 +29,18 @@ public class Arbiter {
 		delayRed = d1;
 		delayBlue = d2;
 		
-		this.appwin = appwin;
-		appwin.setState(s);
-		appwin.setGameLoopState(gameLoop);
+//		this.appwin = appwin;
+//		appwin.setState(s);
+//		appwin.setGameLoopState(gameLoop);
 	}
 
 	public void showGame() {
 
 		// create AppWindow
 		//AppWindow appwin = new AppWindow(s);
-		appwin.setSize(new Dimension(500, 520));
-		appwin.setTitle("Hexxagon");
-		appwin.setVisible(true);
+		//appwin.setSize(new Dimension(500, 520));
+		//appwin.setTitle("Hexxagon");
+		//appwin.setVisible(true);
 
 		// Actually play the game
 
@@ -78,7 +77,7 @@ public class Arbiter {
 			s.applyMove(m);
 
 			// paint new situation
-			appwin.repaint();
+			s.paint(board);
 
 		}
 	}
