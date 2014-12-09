@@ -7,7 +7,7 @@
 
 import java.util.*;
 import java.awt.*;
-
+import javax.swing.*;
 public class State {
     // We store the state in a hash with the Hexpos's as keys and their
     // owner (none, red, blue) as value.
