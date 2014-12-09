@@ -6,9 +6,12 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
+import java.awt.Font;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class Board extends JFrame {
@@ -20,6 +23,8 @@ public class Board extends JFrame {
 			Color.yellow };
 
 	private JPanel boardPanel;
+	private JLabel redScore;
+	private JLabel blueScore;
 	private HaxagonUI firstFrame;
 	private Hex selected;
 
@@ -27,6 +32,9 @@ public class Board extends JFrame {
 	private State state;
 	
 	private static Move move;
+	
+	private int scoreR;
+	private int scoreB;
 	
 	public Board(int size, State state, HaxagonUI ui) {
 		this.state = state;
@@ -79,6 +87,30 @@ public class Board extends JFrame {
 				}
 			}
 		};
+		// add label for score
+		scoreR = 3;
+		scoreB = 3;
+		boardPanel.setLayout( null );
+		redScore = new JLabel("RED : " + scoreR );
+		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );
+		redScore.setFont(f);
+		redScore.setForeground(Color.red);
+		redScore.setHorizontalTextPosition(SwingConstants.CENTER);
+		redScore.setHorizontalAlignment(SwingConstants.CENTER);
+		redScore.setVerticalTextPosition(SwingConstants.CENTER);
+		redScore.setVerticalAlignment(SwingConstants.CENTER);
+		boardPanel.add( redScore );
+		redScore.setBounds( 0, 600 ,200,50);
+		
+		blueScore = new JLabel("BLUE : " + scoreB );
+		blueScore.setFont(f);
+		blueScore.setForeground(Color.blue);
+		blueScore.setHorizontalTextPosition(SwingConstants.CENTER);
+		blueScore.setHorizontalAlignment(SwingConstants.CENTER);
+		blueScore.setVerticalTextPosition(SwingConstants.CENTER);
+		blueScore.setVerticalAlignment(SwingConstants.CENTER);
+		boardPanel.add( blueScore );
+		blueScore.setBounds( 575, 600 ,200,50);
 		// ------------- END DRAW ON PANEL -------------
 
 		// ------------- ADD MOUSE ACTION -------------
@@ -152,6 +184,13 @@ public class Board extends JFrame {
 			h.setValue(state[h.getI()][h.getJ()]);
 		}
 		repaint();
+	}
+	
+	public void setScore( int red, int blue ) {
+		scoreR = red;
+		scoreB = blue;
+		redScore.setText("RED: " + scoreR);
+		blueScore.setText("BLUE: " + scoreB);
 	}
 
 	public int distance(Hex h1, Hex h2) {

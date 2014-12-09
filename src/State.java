@@ -361,6 +361,7 @@ public class State {
 			}
 		}
 		board.updateBoard(binds);
+		board.setScore( getnRed() , getnBlue());
 
 	}
 
