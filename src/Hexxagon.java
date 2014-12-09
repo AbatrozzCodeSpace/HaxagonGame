@@ -89,7 +89,7 @@ public class Hexxagon {
 		System.out.println("1. Human (interactive) player");
 		System.out.println("2. RandomPlayer (makes random moves)");
 		System.out
-				.println("3. EagerPlayer (picks best move, but does not look ahead");
+				.println("3. EagerPlayer (picks best move, but does not look ahead)");
 		System.out.println("4. MinimaxPlayer, look ahead one move");
 		System.out.println("5. MinimaxPlayer, look ahead two moves");
 
