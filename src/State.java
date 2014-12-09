@@ -357,7 +357,9 @@ public class State {
     	    if (movesTo != null)
     		moves.addAll(findMovesTo(hp, player));
     	}
-    	
+    	if(moves.size()==0){
+    		return null;
+    	}
     	int random = (int)(Math.random()*moves.size());
     	return (Move) moves.get(random);
         }
