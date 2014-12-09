@@ -6,8 +6,9 @@
 /* Create an application window */
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
-public class AppWindow extends Frame {
+public class AppWindow extends JFrame {
 	State state;
 	GameLoopState gameLoop;
 	Board board;
@@ -45,5 +46,10 @@ public class AppWindow extends Frame {
 	
 	public void setBoard( Board board ){
 		this.board= board;
+	}
+	
+	public void setPanel( JPanel panel ){
+		this.remove(0);
+		this.add(panel);
 	}
 } 
