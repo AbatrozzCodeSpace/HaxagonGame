@@ -57,22 +57,8 @@ public class Hexxagon {
 		System.out.println("4. MinimaxPlayer, look ahead one move");
 		System.out.println("5. MinimaxPlayer, look ahead two moves");
 
-		int choice = 0;
-		// try to get valid input
-		do {
-			try {
-				System.out.print("Enter your choice: ");
-				choice = Integer.parseInt(br.readLine());
-			} catch (IOException e) {
-				System.out
-						.println("Problem with reading from stdin, giving up:"
-								+ e);
-				System.exit(1);
-			} catch (NumberFormatException e) {
-				System.out
-						.println("Please type only a single integer after every question.");
-				continue;
-			}
+			
+	Player p;
 
 	switch (choice) {
 	case 1:
