@@ -5,6 +5,5 @@ public class GameLoopState {
 		IN_GAME,
 		GAME_OVER,
 	}
-	
 	public static GameState state;
 }

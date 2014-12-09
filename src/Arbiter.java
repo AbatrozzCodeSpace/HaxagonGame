@@ -35,7 +35,7 @@ public class Arbiter {
 	}
 
 	public void showGame() {
-
+		s.paint(board);
 		// create AppWindow
 		//AppWindow appwin = new AppWindow(s);
 		//appwin.setSize(new Dimension(500, 520));
