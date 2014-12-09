@@ -38,7 +38,7 @@ public class Arbiter {
 	public void showGame() {
 
 		// create AppWindow
-		AppWindow appwin = new AppWindow(s);
+		//AppWindow appwin = new AppWindow(s);
 		appwin.setSize(new Dimension(500, 520));
 		appwin.setTitle("Hexxagon");
 		appwin.setVisible(true);
