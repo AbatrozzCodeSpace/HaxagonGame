@@ -8,7 +8,7 @@ import java.util.*;
 public class MinimaxPruningPlayer implements Player {
     String me;
     int maxdepth;
-    private static int MAX_TOP = 3;
+    private static int MAX_TOP = 5;
 
     // Assign an evaluation value to a state: higher values are better
     private int evalState(State s) {
@@ -90,13 +90,13 @@ public class MinimaxPruningPlayer implements Player {
 			}
 	    }
 	    
-	    if(depth==maxdepth){
-	    	System.out.println("\ntop ");
-	    for(i=0;i<MAX_TOP;i++){
-	    	System.out.println(topScores[i]);
-	    }
-	    System.out.println("----------------------------");
-	    }
+//	    if(depth==maxdepth){
+//	    	System.out.println("\ntop ");
+//	    for(i=0;i<MAX_TOP;i++){
+//	    	System.out.println(topScores[i]);
+//	    }
+//	    System.out.println("----------------------------");
+//	    }
 
 	    // We already know there is at least one move, so use it to
 	    // initialize minimaxvalue
