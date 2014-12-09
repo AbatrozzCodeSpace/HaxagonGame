@@ -49,6 +49,7 @@ public class AppWindow extends JFrame {
 	}
 	
 	public void setPanel( JPanel panel ){
+		System.out.println(getComponentCount());
 		this.remove(0);
 		this.add(panel);
 	}
