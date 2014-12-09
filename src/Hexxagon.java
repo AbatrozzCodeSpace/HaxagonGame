@@ -1,10 +1,3 @@
-/* Liesbeth Flobbe
- * Hexxagon game
- * file: Hexxagon.java
- */
-
-/* The actual game... */
-
 import java.awt.Dimension;
 import java.io.*;
 
@@ -33,23 +26,6 @@ public class Hexxagon {
 		System.out.println("Pick an implementation for player [" + player
 				+ "].");
 
-	int choice = 0;
-	// try to get valid input
-	do {
-	    try {
-		System.out.print("Enter your choice: ");
-		choice = Integer.parseInt(br.readLine());
-	    }
-	    catch (IOException e) {
-		System.out.println("Problem with reading from stdin, giving up:" + e);
-		System.exit(1);
-	    }
-	    catch (NumberFormatException e) {
-		System.out.println("Please type only a single integer after every question.");
-		continue;
-	    }
-	    
-	} while (! (choice > 0 && choice < 7));
 		System.out.println("1. Human (interactive) player");
 		System.out.println("2. RandomPlayer (makes random moves)");
 		System.out
@@ -57,8 +33,26 @@ public class Hexxagon {
 		System.out.println("4. MinimaxPlayer, look ahead one move");
 		System.out.println("5. MinimaxPlayer, look ahead two moves");
 
-			
-	Player p;
+		int choice = 0;
+		// try to get valid input
+		do {
+			try {
+				System.out.print("Enter your choice: ");
+				choice = Integer.parseInt(br.readLine());
+			} catch (IOException e) {
+				System.out
+						.println("Problem with reading from stdin, giving up:"
+								+ e);
+				System.exit(1);
+			} catch (NumberFormatException e) {
+				System.out
+						.println("Please type only a single integer after every question.");
+				continue;
+			}
+
+		} while (!(choice > 0 && choice < 7));
+
+		Player p;
 
 	switch (choice) {
 	case 1:
@@ -78,6 +72,9 @@ public class Hexxagon {
 	    break;
 	case 6:
 		p = new ParkMinimaxPlayer(2, 100, 95, 90, 85);
+		break;
+	case 7:
+		p = new MonteCarloPlayer(0,1000);
 		break;
 	default:
 	    p = new InteractivePlayer();
