@@ -8,7 +8,6 @@
 import java.util.*;
 import java.awt.*;
 
-import javax.swing.*;
 public class State {
     // We store the state in a hash with the Hexpos's as keys and their
     // owner (none, red, blue) as value.
@@ -72,6 +71,22 @@ public class State {
 
 	turn = "red";
     }
+
+	public String toString(){
+		String tmp = "";
+		for (int r = 1; r <= 17; r++) { // for every row
+			int c = ((r % 2 == 0) ? 2 : 1); // what col to start?
+			for (; c <= 9; c += 2) {
+				Hexpos h = new Hexpos(r, c);
+				if (h.onBoard()){
+				  	tmp += "[ " + h.hashCode() + " : " + owner(h ) + "] " ;
+				
+				}
+			}
+		}
+		return tmp;
+		
+	}
 
 	public int canWalk(String side, Hexpos pos){
 		// 0 someone there's 1 empty but cant 2 empty and can
@@ -337,32 +352,32 @@ public class State {
 
 	return moves;
     }
-    
-    public Move findRandomMove(String player) {
-    	// Check if player is valid (so we don't have to worry about
-    	// null pointers later).
-    	if (player == null || ! (player.equals("red") || 
-    			         player.equals("blue")))
-    	    return null;
 
-    	MyList moves = new MyList();
+	public Move findRandomMove(String player) {
+	// Check if player is valid (so we don't have to worry about
+	// null pointers later).
+		if (player == null || ! (player.equals("red") ||
+									player.equals("blue")))
+			return null;
 
-    	// Iterate over all Hexpos's
-    	Set set = owner.keySet();
-    	
-    	Iterator it = set.iterator();
-    	while(it.hasNext()) {
-    	    Hexpos hp = (Hexpos) it.next();
-    	    MyList movesTo = findMovesTo(hp, player);
-    	    if (movesTo != null)
-    		moves.addAll(findMovesTo(hp, player));
-    	}
-    	if(moves.size()==0){
-    		return null;
-    	}
-    	int random = (int)(Math.random()*moves.size());
-    	return (Move) moves.get(random);
-        }
+		MyList moves = new MyList();
+
+		// Iterate over all Hexpos's
+		Set set = owner.keySet();
+
+		Iterator it = set.iterator();
+		while(it.hasNext()) {
+			Hexpos hp = (Hexpos) it.next();
+			MyList movesTo = findMovesTo(hp, player);
+			if (movesTo != null)
+			   moves.addAll(findMovesTo(hp, player));
+			}
+			if(moves.size()==0){
+				return null;
+		}
+		int random = (int)(Math.random()*moves.size());
+		return (Move) moves.get(random);
+	}
 
     public MyList findMoves() {
 	return findMoves(turn);
