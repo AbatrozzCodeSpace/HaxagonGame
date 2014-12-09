@@ -8,7 +8,7 @@ import java.util.*;
 
 public class RandomPlayer implements Player {
     Random r = new Random();
-
+    public String name = "randomPlayer";
     public Move chooseMove(State s) {
 	MyList moves = s.findMoves();
 	if (moves.size() == 0) // no moves possible

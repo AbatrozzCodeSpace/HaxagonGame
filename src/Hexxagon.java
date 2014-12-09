@@ -14,27 +14,59 @@ public class Hexxagon {
 	public static final int BLANK = 0;
 	public static final int RED = 1;
 	public static final int BLUE = 2;
+	GameLoopState gameLoop;
+	
+	public static Player p1, p2;
 	
 	public static void main(String args[]) {
-		State s = new State();
-		Board board = new Board(5);
 		GameLoopState gameLoop = new GameLoopState();
 	
-		Player p1 = getPlayer("red");
-		Player p2 = getPlayer("blue");
-
-		// The last two argument to Arbiter are delay times before
-		// allowing a player to make a move, so you have time to see
-		// what just happened.
-		Arbiter a = new Arbiter(p1, p2, 1000, 1000, gameLoop, s, board);
+		new HaxagonUI();
+		
+	}
+	
+	public static void setPlayers( Player p1_, Player p2_ ) {
+		p1 = p1_;
+		p2 = p2_;
+		
+	}
+	
+	public static void goToBoard(Player p1, Player p2){
+		System.out.println(p1+" "+p2);
+		State s = new State();
+		Board board = new Board(5);
+		
+		Arbiter a = new Arbiter(p1, p2, 1000, 1000, null, s, board);
+		
 
 		System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
 		System.out.println("End the game by closing the game window.");
 
 		a.showGame();
-
 	}
-
+	public static Player getPlayer(int player) {
+		Player p;
+		switch (player) {
+		case 1:
+			p = new InteractivePlayer();
+			break;
+		case 2:
+			p = new RandomPlayer();
+			break;
+		case 3:
+			p = new EagerPlayer();
+			break;
+		case 4:
+			p = new MinimaxPlayer(1);
+			break;
+		case 5:
+			p = new MinimaxPlayer(2);
+			break;
+		default:
+			p = new InteractivePlayer();
+		}
+		return p;
+	}
 	private static Player getPlayer(String player) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Pick an implementation for player [" + player
@@ -65,29 +97,8 @@ public class Hexxagon {
 			}
 
 		} while (!(choice > 0 && choice < 6));
-
-		Player p;
-
-		switch (choice) {
-		case 1:
-			p = new InteractivePlayer();
-			break;
-		case 2:
-			p = new RandomPlayer();
-			break;
-		case 3:
-			p = new EagerPlayer();
-			break;
-		case 4:
-			p = new MinimaxPlayer(1);
-			break;
-		case 5:
-			p = new MinimaxPlayer(2);
-			break;
-		default:
-			p = new InteractivePlayer();
-		}
-
+		Player p = getPlayer(choice);
 		return p;
+		
 	}
 }

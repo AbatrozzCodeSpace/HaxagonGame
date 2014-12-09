@@ -101,10 +101,25 @@ public class PopupUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				String selectedBook = (String) typeList.getSelectedItem();
-				JOptionPane.showMessageDialog(PopupUI.this,
-						"Player 1 is " + (String)typeList.getSelectedItem()+"\nPlayer 2 is "+(String)typeList2.getSelectedItem());
-				container.removeAll();
-				container.repaint();
+				int t1 = typeList.getSelectedIndex()+1;
+				int t2 = typeList2.getSelectedIndex()+1;
+		//		JOptionPane.showMessageDialog(PopupUI.this,
+		//				"Player 1 is " + (String)typeList.getSelectedItem()+"\nPlayer 2 is "+(String)typeList2.getSelectedItem());
+		//		container.removeAll();
+		//		container.repaint();
+				
+			
+
+				Player p1 = Hexxagon.getPlayer(t1);
+				Player p2 = Hexxagon.getPlayer(t2);
+
+				// The last two argument to Arbiter are delay times before
+				// allowing a player to make a move, so you have time to see
+				// what just happened.
+				
+				//Hexxagon.setPlayers(p1, p2);
+				Hexxagon.goToBoard(p1,p2);
+			
 			}
 		});
 
