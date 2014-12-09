@@ -5,34 +5,33 @@
 
 /* The actual game... */
 
+import java.awt.Dimension;
 import java.io.*;
 
 public class Hexxagon {
-    public static void main(String args[]) {
-	Player p1 = getPlayer("red");
-	Player p2 = getPlayer("blue");
+	public static void main(String args[]) {
+		AppWindow appWin = new AppWindow();
+		GameLoopState gameLoop = new GameLoopState();
 	
-	// The last two argument to Arbiter are delay times before
-	// allowing a player to make a move, so you have time to see
-	// what just happened.
-	Arbiter a = new Arbiter(p1, p2, 1000, 1000);
-	
-	System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
-	System.out.println("End the game by closing the game window.");
+		Player p1 = getPlayer("red");
+		Player p2 = getPlayer("blue");
 
-	a.showGame();
+		// The last two argument to Arbiter are delay times before
+		// allowing a player to make a move, so you have time to see
+		// what just happened.
+		Arbiter a = new Arbiter(p1, p2, 1000, 1000, appWin, gameLoop);
 
-    }
+		System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
+		System.out.println("End the game by closing the game window.");
 
-    private static Player getPlayer(String player) {
-	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	System.out.println("Pick an implementation for player [" + player + "].");
+		a.showGame();
 
-	System.out.println("1. Human (interactive) player");
-	System.out.println("2. RandomPlayer (makes random moves)");
-	System.out.println("3. EagerPlayer (picks best move, but does not look ahead");
-	System.out.println("4. MinimaxPlayer, look ahead one move");
-	System.out.println("5. MinimaxPlayer, look ahead two moves");
+	}
+
+	private static Player getPlayer(String player) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Pick an implementation for player [" + player
+				+ "].");
 
 	int choice = 0;
 	// try to get valid input
@@ -51,8 +50,29 @@ public class Hexxagon {
 	    }
 	    
 	} while (! (choice > 0 && choice < 7));
+		System.out.println("1. Human (interactive) player");
+		System.out.println("2. RandomPlayer (makes random moves)");
+		System.out
+				.println("3. EagerPlayer (picks best move, but does not look ahead");
+		System.out.println("4. MinimaxPlayer, look ahead one move");
+		System.out.println("5. MinimaxPlayer, look ahead two moves");
 
-	Player p;
+		int choice = 0;
+		// try to get valid input
+		do {
+			try {
+				System.out.print("Enter your choice: ");
+				choice = Integer.parseInt(br.readLine());
+			} catch (IOException e) {
+				System.out
+						.println("Problem with reading from stdin, giving up:"
+								+ e);
+				System.exit(1);
+			} catch (NumberFormatException e) {
+				System.out
+						.println("Please type only a single integer after every question.");
+				continue;
+			}
 
 	switch (choice) {
 	case 1:
@@ -77,6 +97,7 @@ public class Hexxagon {
 	    p = new InteractivePlayer();
 	}
 
-	return p;
-    }
+
+		return p;
+	}
 }
