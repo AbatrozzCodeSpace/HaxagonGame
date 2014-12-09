@@ -8,11 +8,10 @@ import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Board extends JFrame {
+public class Board extends JPanel {
 	
 	private static final int start = 50;
 	private static final int r = 40;
@@ -23,7 +22,6 @@ public class Board extends JFrame {
 	private Hex selected;
 	
 	public LinkedList<Hex> hexList = new LinkedList<Hex>();
-	private int[][] adjMatrix;
 	
 	public Board(int size) {
 		
@@ -46,18 +44,6 @@ public class Board extends JFrame {
 			}
 		}
 		//------------- END CREATE HEXAGON -------------
-		
-		//------------- INIT ADJACENT MATRIX -------------
-		adjMatrix = new int[hexList.size()][hexList.size()];
-		for(int i = 0; i < adjMatrix.length; i++) {
-			for(int j = 0; j < adjMatrix.length; j++) {
-				if(i == j)
-					adjMatrix[i][j] = 0;
-				else
-					adjMatrix[i][j] = Engine.distance(hexList.get(i), hexList.get(j));
-			}
-		}
-		//------------- END INIT ADJACENT MATRIX -------------
 		
 		//------------- DRAW ON PANEL -------------
 		boardPanel = new JPanel() {
@@ -90,13 +76,13 @@ public class Board extends JFrame {
 	        public void mousePressed(MouseEvent m) {
 	        	Point p = m.getPoint();
 	        	for(int i = 0; i < hexList.size(); i++) {
-	        		Hex h = hexList.get(i);
-	          		if(h.contains(p)) {
-	          			selected = h;
-	          			System.out.println(h);
-	          			for(int j = 0; j < adjMatrix.length; j++){
-	          				if(adjMatrix[i][j] < 3)
-	          					hexList.get(j).setBg(adjColor[adjMatrix[i][j]]);
+	        		Hex h1 = hexList.get(i);
+	          		if(h1.contains(p)) {
+	          			selected = h1;
+	          			for(Hex h2: hexList) {
+	          				int distance = distance(h1,h2);
+	          				if(distance < 3)
+	          					h2.setBg(adjColor[distance]);
 	          			}
 	          			break;
 	          		}
@@ -124,24 +110,24 @@ public class Board extends JFrame {
 //		add(boardPanel, BorderLayout.EAST);
 		add(boardPanel);
 		setBackground(Color.darkGray);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setFocusable(false);
 		setSize(700, 700);
-		setLocationRelativeTo(null);
+		//setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
 	public int[][] init() {
 		int[][] binds = new int[17][9];
 		for (int[] row : binds)
-		    Arrays.fill(row, Engine.INVALID);
+		    Arrays.fill(row, Hexxagon.INVALID);
 		for(int i = 0; i < hexList.size(); i++) {
 			Hex h = hexList.get(i);
-			int code = Engine.BLANK;
+			int code = Hexxagon.BLANK;
 			if(i == 0 || i == 32 || i == 53 )
-				code = Engine.RED;
+				code = Hexxagon.RED;
 			else if( i == 4 || i == 25 || i == 57)
-				code = Engine.BLUE;
+				code = Hexxagon.BLUE;
 			binds[h.getI()][h.getJ()] = code;
 		}
 		updateBoard(binds);
@@ -153,5 +139,13 @@ public class Board extends JFrame {
 			h.setValue(state[h.getI()][h.getJ()]);
 		}
 		repaint();
+	}
+	
+	public int distance(Hex h1, Hex h2) {
+		return distance(h1.getI(), h1.getJ(), h2.getI(), h2.getJ());
+	}
+	
+	public int distance(int i1, int j1, int i2, int j2) {
+		return (Math.abs(i1-i2)/2+Math.abs(j1-j2));
 	}
 }

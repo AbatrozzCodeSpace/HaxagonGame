@@ -360,10 +360,10 @@ public class State {
 		if (owner.get(hp) != null) {
 			System.out.println(hp);
 			if (owner.get(hp).equals("red")) {
-				binds[hp.row() - 1][hp.col() - 1] = Engine.RED;
+				binds[hp.row() - 1][hp.col() - 1] = Hexxagon.RED;
 			} else if (owner.get(hp).equals("blue"))  {
-				binds[hp.row() - 1][hp.col() - 1] = Engine.BLUE;
-			} else binds[hp.row() - 1][hp.col() - 1] = Engine.BLANK;
+				binds[hp.row() - 1][hp.col() - 1] = Hexxagon.BLUE;
+			} else binds[hp.row() - 1][hp.col() - 1] = Hexxagon.BLANK;
 		}
 	}
 	board.updateBoard(binds);

@@ -9,6 +9,11 @@ import java.awt.Dimension;
 import java.io.*;
 
 public class Hexxagon {
+	public static final int INVALID = -1;
+	public static final int BLANK = 0;
+	public static final int RED = 1;
+	public static final int BLUE = 2;
+	
 	public static void main(String args[]) {
 		AppWindow appWin = new AppWindow(new Board(5));
 		GameLoopState gameLoop = new GameLoopState();
