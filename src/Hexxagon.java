@@ -10,7 +10,7 @@ import java.io.*;
 
 public class Hexxagon {
 	public static void main(String args[]) {
-		AppWindow appWin = new AppWindow();
+		AppWindow appWin = new AppWindow(new Board(5));
 		GameLoopState gameLoop = new GameLoopState();
 	
 		Player p1 = getPlayer("red");

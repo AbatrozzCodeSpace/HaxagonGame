@@ -36,6 +36,8 @@ public class Arbiter {
 	}
 
 	public void showGame() {
+		Board board;
+		board = new Board(5);
 
 		// create AppWindow
 		//AppWindow appwin = new AppWindow(s);

@@ -339,47 +339,39 @@ public class State {
     }
 
     /* paint a state */
-    public void paint(Graphics g) {
-	int radius = 50;
+    public void paint(Board board) {
+
 
 	// Iterate over all Hexpos's
 	Set set = owner.keySet();
 	Iterator it = set.iterator();
-	while(it.hasNext()) {
-	    Hexpos hp = (Hexpos) it.next();
-
-	    double cart_x = .8660 * radius * hp.col();
-	    double cart_y = 15 + .5 * radius * hp.row();
-	    
-	    g.setColor(Color.black);
-
-	    if (owner.get(hp) != null) {
-		g.setColor(owner.get(hp).equals("red") ? Color.red : Color.blue);
-		g.fillOval((int) cart_x,
-			   (int) cart_y, 
-			   (int) (.8 * radius),
-			   (int) (.8 * radius));
-		
-		g.setColor(Color.white);
-	    }
-
-	    g.drawString(hp.row() + ", " + hp.col(), 
-			 (int) cart_x + 8, 
-			 (int) cart_y + 24);
-	    g.setColor(Color.black);
-	    g.drawOval((int) cart_x,
-		       (int) cart_y, 
-		       (int) (.8 * radius),
-		       (int) (.8 * radius));
-
+	int[][] binds = new int[17][9];
+	for (int[] row : binds)
+	    Arrays.fill(row, -1);
+	
+	for(int i = 0; i < board.hexList.size(); i++) {
+		Hex h = board.hexList.get(i);
+		binds[h.getI()][h.getJ()] = 0;
 	}
 	
-	g.setColor(Color.red);
-	g.drawString("Red: " + nSquares.get("red"), 10, 500);
-	g.setColor(Color.blue);
-	g.drawString("Blue: " + nSquares.get("blue"), 440, 500);
+	while(it.hasNext()) {
+
+	    Hexpos hp = (Hexpos) it.next();
+		if (owner.get(hp) != null) {
+			System.out.println(hp);
+			if (owner.get(hp).equals("red")) {
+				binds[hp.row() - 1][hp.col() - 1] = Engine.RED;
+			} else if (owner.get(hp).equals("blue"))  {
+				binds[hp.row() - 1][hp.col() - 1] = Engine.BLUE;
+			} else binds[hp.row() - 1][hp.col() - 1] = Engine.BLANK;
+		}
+	}
+	board.updateBoard(binds);
+	
+
+
+
 	
     }
 	
-		
 }

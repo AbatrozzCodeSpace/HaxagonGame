@@ -10,8 +10,10 @@ import java.awt.event.*;
 public class AppWindow extends Frame {
 	State state;
 	GameLoopState gameLoop;
+	Board board;
 
-	public AppWindow() {
+	public AppWindow(Board board) {
+		this.board = board;
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent we) {
 				System.exit(0);
@@ -30,7 +32,7 @@ public class AppWindow extends Frame {
 
 	public void paint(Graphics g) {
 		// call State's paint
-		state.paint(g);
+		state.paint(board);
 	}
 
 	public void setState(State s) {
@@ -39,5 +41,9 @@ public class AppWindow extends Frame {
 	
 	public void setGameLoopState( GameLoopState gameLoop ) {
 		this.gameLoop = gameLoop;
+	}
+	
+	public void setBoard( Board board ){
+		this.board= board;
 	}
 } 
