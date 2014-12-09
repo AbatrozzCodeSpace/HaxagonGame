@@ -11,7 +11,7 @@ import java.io.*;
 
 public class EvalMany {
     public static void main(String args[]) {
-	Player p1 = getPlayer("red");
+/*	Player p1 = getPlayer("red");
 	Player p2 = getPlayer("blue");
 	
 	Arbiter a = new Arbiter(p1, p2, 0, 0);
@@ -94,6 +94,6 @@ public class EvalMany {
 	    p = new RandomPlayer();
 	}
 
-	return p;
+	return p;*/
     }
 }
