@@ -15,7 +15,9 @@ public class Hexxagon {
 	public static final int BLUE = 2;
 	
 	public static void main(String args[]) {
-		AppWindow appWin = new AppWindow(new Board(5));
+		Board board = new Board(5);
+		AppWindow appWin = new AppWindow(board);
+		
 		GameLoopState gameLoop = new GameLoopState();
 	
 		Player p1 = getPlayer("red");
@@ -25,7 +27,9 @@ public class Hexxagon {
 		// allowing a player to make a move, so you have time to see
 		// what just happened.
 		Arbiter a = new Arbiter(p1, p2, 1000, 1000, appWin, gameLoop);
-
+		
+		appWin.setPanel(board);
+		
 		System.out.println("Starting game. There will be a 1 second delay before each player is allowed to move.");
 		System.out.println("End the game by closing the game window.");
 
