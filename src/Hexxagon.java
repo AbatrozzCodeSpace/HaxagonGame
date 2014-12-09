@@ -27,6 +27,8 @@ public class Hexxagon {
 				State s = new State();
 				HaxagonUI ui = new HaxagonUI();
 				Board board = new Board(5, s, ui);
+		//		if(!GameLoopState.wav.isReady())GameLoopState.wav.stopMusic();
+		//		if(GameLoopState.wav.isReady()) GameLoopState.wav.openSong("TitleBGM.wav");
 				synchronized (s) {
 					try {
 						s.wait();
@@ -49,6 +51,12 @@ public class Hexxagon {
 			}
 		});
 		hexxThread.start();
+	}
+	public static void returnToTitle(){
+		System.out.println("Return to Title");
+	}
+	public static void resetMatch(){
+		System.out.println("Restart");
 	}
 	public static Player getPlayer(int player) {
 		Player p;

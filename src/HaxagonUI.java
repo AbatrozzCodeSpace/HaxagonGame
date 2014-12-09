@@ -54,6 +54,7 @@ public class HaxagonUI extends JPanel {
 
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				GameLoopState.effector.openEffect("charge.wav");
 				try {
 					UIManager.setLookAndFeel(UIManager
 							.getSystemLookAndFeelClassName());
@@ -68,6 +69,7 @@ public class HaxagonUI extends JPanel {
 		aboutButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				GameLoopState.effector.openEffect("charge.wav");
 				JOptionPane
 						.showMessageDialog(
 								null,
@@ -79,7 +81,7 @@ public class HaxagonUI extends JPanel {
 
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				GameLoopState.effector.openEffect("charge.wav");
 				String[] choices = { "Yes", "No" };
 				int response = JOptionPane.showOptionDialog(null // Center in
 																	// window.
@@ -91,8 +93,10 @@ public class HaxagonUI extends JPanel {
 						, choices // Button text as above.
 						, "None of your business" // Default button's label
 				);
-				if (response == 0)
+				if (response == 0){
+
 					System.exit(0);
+				}
 
 			}
 		});
@@ -101,22 +105,24 @@ public class HaxagonUI extends JPanel {
 
 	public void createFirstTitle() {
 		removeAll();
+		setLayout(null);
+
+	
 		add(startButton);
 		add(aboutButton);
 		add(exitButton);
-
 		add(bgLabel);
 		add(new JLabel());
 		Dimension size = startButton.getPreferredSize();
-		startButton.setBounds(getWidth() / 2 - size.width + 55, 380,
+		startButton.setBounds(getWidth() / 2 - size.width + 55, 420,
 				size.width, size.height);
 		size = aboutButton.getPreferredSize();
-		aboutButton.setBounds(getWidth() / 2 - size.width + 55, 425,
+		aboutButton.setBounds(getWidth() / 2 - size.width + 55, 465,
 				size.width, size.height);
 		size = exitButton.getPreferredSize();
-		exitButton.setBounds(getWidth() / 2 - size.width + 55, 465, size.width,
+		exitButton.setBounds(getWidth() / 2 - size.width + 55, 505, size.width,
 				size.height);
-		size = bgLabel.getPreferredSize();
+		size = bgLabel.getMaximumSize();
 		bgLabel.setBounds(0, 0, size.width, size.height);
 
 		repaint();

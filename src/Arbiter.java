@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 /* Liesbeth Flobbe
  * Hexxagon game
  * file: Arbiter.java
@@ -62,6 +64,23 @@ public class Arbiter {
 			if (m == null || !s.legalMove(m)) {
 				System.err.println(s.whoseTurn()
 						+ " did not produce a legal move. Ending game.");
+				String[] choices = { "Restart Game", "Return to Title" };
+				int response = JOptionPane.showOptionDialog(null // Center in
+																	// window.
+						, "The winner is "+s.otherPlayer(s.whoseTurn())+"!" // Message
+						, "Game Ended!" // Title in titlebar
+						, JOptionPane.YES_NO_OPTION // Option type
+						, JOptionPane.PLAIN_MESSAGE // messageType
+						, null // Icon (none)
+						, choices // Button text as above.
+						, "None of your business" // Default button's label
+				);
+				if (response == 0){
+					Hexxagon.resetMatch();
+				}
+				else if (response ==1){
+					Hexxagon.returnToTitle();
+				}
 				return;
 			}
 

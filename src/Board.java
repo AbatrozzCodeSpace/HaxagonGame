@@ -29,6 +29,7 @@ public class Board extends JFrame {
 	private static Move move;
 	
 	public Board(int size, State state, HaxagonUI ui) {
+		setTitle("Haxagon");
 		this.state = state;
 		firstFrame = ui;
 		// ------------- CREATE HEXAGON -------------
