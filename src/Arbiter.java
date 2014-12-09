@@ -152,18 +152,8 @@ public class Arbiter {
 
 			// ask the right player to make a move
 			if (s.whoseTurn().equals("red")) {
-				try {
-					Thread.sleep(delayRed);
-				} catch (Exception e) {
-				}
-				;
 				m = red.chooseMove(s);
 			} else {
-				try {
-					Thread.sleep(delayBlue);
-				} catch (Exception e) {
-				}
-				;
 				m = blue.chooseMove(s);
 			}
 
