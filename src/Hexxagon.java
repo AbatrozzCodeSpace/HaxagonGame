@@ -50,7 +50,7 @@ public class Hexxagon {
 		continue;
 	    }
 	    
-	} while (! (choice > 0 && choice < 6));
+	} while (! (choice > 0 && choice < 7));
 
 	Player p;
 
@@ -70,6 +70,9 @@ public class Hexxagon {
 	case 5:
 	    p = new MinimaxPlayer(2);
 	    break;
+	case 6:
+		p = new ParkMinimaxPlayer(2, 100, 95, 90, 85);
+		break;
 	default:
 	    p = new InteractivePlayer();
 	}

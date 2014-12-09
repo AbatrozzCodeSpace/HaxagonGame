@@ -17,4 +17,11 @@
 			classpath="${BIN_DIR}">
 		</java>
 	</target>
+	<target name="build-driver">
+		<javac destdir="${BIN_DIR}" srcdir="${SRC_DIR}" />
+		<java fork="true"
+			classname="${MAIN_CLASS}"
+			classpath="${BIN_DIR}">
+		</java>
+	</target>
 </project>

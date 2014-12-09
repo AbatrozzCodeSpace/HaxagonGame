@@ -56,6 +56,7 @@ public class State {
 	    owner.put(it.next(), null);
 	}
 
+
 	// fill in the beginning positions of both players
 	owner.put(new Hexpos(1, 5), "blue");
 	owner.put(new Hexpos(13, 1), "blue");
@@ -71,6 +72,33 @@ public class State {
 	turn = "red";
     }
 
+	public int canWalk(String side, Hexpos pos){
+		// 0 someone there's 1 empty but cant 2 empty and can
+		State state = this;
+		if(side != "red" && side != "blue")
+			return -1;
+		if(state.owner(pos) != null)
+			return 0;
+		MyList walkArea = pos.neighbours();
+		for(Object tmp : walkArea){
+			if(state.owner((Hexpos)tmp) == side)
+				return  2;
+		}
+		return 1;
+	}
+	public int canJump(String side, Hexpos pos){
+		State state = this;
+		if(side != "red" && side != "blue")
+			return -1;
+		if(state.owner(pos) != null)
+			return 0;
+		MyList jumpArea = pos.jumpNeighbours();
+		for(Object tmp : jumpArea){
+			if(state.owner((Hexpos)tmp) == side)
+				return  2;
+		}
+		return 1;
+	}
     public int getnEmpty() {
 	return ((Integer) nSquares.get(null)).intValue();
     }
