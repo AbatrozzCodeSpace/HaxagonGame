@@ -15,6 +15,7 @@ public class MonteCarloPlayer implements Player {
     }
     
     public Move chooseMove(State s) {
+    	TreeNode.maxDepth = maxdepth;
     	TreeNode rootNode = new TreeNode();
     	rootNode.setState(s);
     	TreeNode.nowScore = (s.whoseTurn()=="red")?s.getnRed()-s.getnBlue():s.getnBlue()-s.getnRed();
@@ -35,9 +36,13 @@ public class MonteCarloPlayer implements Player {
 					score = cscore;
 					bestMove = cnode.getMove();
 				}
-				System.out.println(cscore+" ");
+				System.out.println(cscore+" "+cnode.totValue+" "+cnode.nVisits);
 			}
 		}
+
+		System.out.println("-----------------");
+		System.out.println(TreeNode.count);
+		TreeNode.count = 0;
 		System.out.println("-----------------");
 		System.out.println(score);
 		System.out.println("-----------------");
