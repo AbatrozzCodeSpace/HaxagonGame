@@ -129,22 +129,29 @@ public class Board extends JFrame {
 
 			@Override
 			public void mousePressed(MouseEvent m) {
+				State s = getGameState();
 				Point p = m.getPoint();
+				int whose = s.whoseTurn().equals("red") ? 1 : 2; // if it's red's turn, value goes to 1, else 2
 				for (int i = 0; i < hexList.size(); i++) {
 					Hex h1 = hexList.get(i);
 					if (h1.contains(p)) {
 						if(h1.getBg().equals(adjColor[0])) {
-							for (Hex h : hexList)
+							if ( h1.getValue() == -1 || whose != h1.getValue() ) return;
+							for (Hex h : hexList) {
 								h.setBg(adjColor[0]);
-							System.out.println("selected "+h1);
+							}
+							System.out.println("selected "+h1 + "value = " + h1.getValue());
 							selected = h1;
 							for (Hex h2 : hexList) {
 								int distance = distance(h1, h2);
-								if (distance < 3)
-									h2.setBg(adjColor[distance]);
+								if (distance < 3) {
+									if ( h2.getValue() == -1 ) {
+										h2.setBg(adjColor[distance]);
+									}
+								}
 							}
 						} else {
-							State s = getGameState();
+							s = getGameState();
 							move = new Move(new Hexpos(selected.getI()+1, selected.getJ()+1),
 									 new Hexpos(h1.getI()+1, h1.getJ()+1),
 									 s.whoseTurn());

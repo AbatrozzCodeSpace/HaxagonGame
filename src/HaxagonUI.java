@@ -86,7 +86,7 @@ public class HaxagonUI extends JPanel {
 				JOptionPane
 						.showMessageDialog(
 								null,
-								"Created by \n5430295521 Nontawat Charoenphakdee  \n5430297821 Noppayut Sriwatanaksakdi  \n5430305121 Nawapat Mahatanarat \n5430376721 Pongsathorn Panyanithisakul \n5430560821 Wichayut Eaksarayut \n5431028521 Park Netrakom \n5431003821 Kawin Worrasangasilpa \n5431019921 Nuttapong Chairatanakul \n5431040021 Sarin Durongdumrongchai    \nDepartment of Computer Engineering\nChulalongkorn University\nYear 2557",
+								"Created by \n5430295521 Nontawat Charoenphakdee  \n5430297821 Noppayut Sriwatanaksakdi  \n5430305121 Nawapat Mahatanarat \n5430376721 Pongsathorn Panyanithisakul \n5430560821 Wichayut Eaksarayut \n5431028521 Park Netrakom \n5431003821 Kawin Worrasangasilpa \n5431019921 Nuttapong Chairatanakul \n5431040021 Sarin Durongdamrongchai    \nDepartment of Computer Engineering\nChulalongkorn University\nYear 2557",
 								"About Us", 1, CP38);
 
 			}
