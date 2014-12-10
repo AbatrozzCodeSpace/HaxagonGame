@@ -445,6 +445,7 @@ public class State {
 		}
 		board.updateBoard(binds);
 		board.setScore( getnRed() , getnBlue());
+		board.setPlayer(whoseTurn().equals("red") ? 1 : 2 );
 
 	}
 

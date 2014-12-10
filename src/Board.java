@@ -323,6 +323,16 @@ public class Board extends JFrame {
 		redScore.setText("" + scoreR);
 		blueScore.setText("" + scoreB);
 	}
+	
+	public void setPlayer( int player) {
+		if ( player == 1) {
+			redBarIndicator.setVisible(true);
+			blueBarIndicator.setVisible(false);
+		} else {
+			blueBarIndicator.setVisible(true);
+			redBarIndicator.setVisible(false);
+		}
+	}
 
 	public int distance(Hex h1, Hex h2) {
 		return distance(h1.getI(), h1.getJ(), h2.getI(), h2.getJ());
