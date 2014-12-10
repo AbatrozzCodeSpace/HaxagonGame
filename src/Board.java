@@ -1,13 +1,14 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
-import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -89,11 +90,6 @@ public class Board extends JFrame {
 						int r = 25;
 						g.fillOval(h.getxCenter() - r, h.getyCenter() - r,
 								2 * r, 2 * r);
-						
-						JLabel label = teamColor[value-1]==Color.red ?  new JLabel(redBall):new JLabel(blueBall);
-					/*	getContentPane().add(label);
-						Dimension size = label.getPreferredSize();
-						label.setBounds(h.getxCenter()-r,h.getyCenter(),size.width,size.height);*/
 						
 						g.setColor(Color.black);
 						g.drawOval(h.getxCenter() - r, h.getyCenter() - r,
@@ -185,6 +181,26 @@ public class Board extends JFrame {
 		boardPanel.addMouseListener(ma);
 		// ------------- END MOUSE ACTION -------------
 
+		// ------------- KEYLISTENER -------------
+		KeyListener l = new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_R && e.isControlDown()) {
+					Arbiter.reset();
+					Hexxagon.arbiThread.interrupt();
+				}
+			}
+		};
+		boardPanel.addKeyListener(l);
+		
 		add(firstFrame);
 		setBackground(Color.darkGray);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -225,6 +241,10 @@ public class Board extends JFrame {
 		return state;
 	}
 	
+	public void setGameState(State state) {
+		this.state = state;
+	}
+	
 	public static Move getMove() {
 		return move;
 	}
@@ -232,6 +252,7 @@ public class Board extends JFrame {
 	public void gotoMain() {
 		remove(firstFrame);
 		add(boardPanel);
+		boardPanel.requestFocus();
 		validate();
 		repaint();
 	}

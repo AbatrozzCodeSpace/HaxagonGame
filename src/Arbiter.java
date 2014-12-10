@@ -14,12 +14,15 @@ public class Arbiter {
 	int delayBlue;
 	State s; // this state is the data structure and painter
 	Board board;
+	
+	static boolean reset;
 
 	public Arbiter(Player p1, Player p2, int d1, int d2,
 			GameLoopState gameLoop, State s, Board b) {
 		// create begin state
 		this.s = s;
 		this.board = b;
+		reset = false;
 
 		// create players
 		red = p1;
@@ -61,11 +64,11 @@ public class Arbiter {
 
 			// fail miserably if the move is illegal or if the player fails te
 			// produce a move
-			if (m == null || !s.legalMove(m)) {
+			if (m == null || !s.legalMove(m) || reset) {
 				System.err.println(s.whoseTurn()
 						+ " did not produce a legal move. Ending game.");
 				GameLoopState.effector.openEffect("charge.wav");
-				String[] choices = { "Restart Game", "Return to Title" };
+				String[] choices = { "Restart Game" };
 				int response = JOptionPane.showOptionDialog(null // Center in
 																	// window.
 						, "The winner is "+s.otherPlayer(s.whoseTurn())+"!" // Message
@@ -78,9 +81,6 @@ public class Arbiter {
 				);
 				if (response == 0){
 					Hexxagon.resetMatch();
-				}
-				else if (response ==1){
-					Hexxagon.returnToTitle();
 				}
 				return;
 			}
@@ -124,8 +124,8 @@ public class Arbiter {
 		return s;
 	}
 
-	public void reset() {
-		s = new State();
+	public static void reset() {
+		reset = true;
 	}
 
 }
