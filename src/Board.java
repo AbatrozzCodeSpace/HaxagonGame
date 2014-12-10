@@ -1,6 +1,7 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -8,6 +9,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
@@ -125,7 +130,21 @@ public class Board extends JFrame {
 		scoreB = 3;
 		boardPanel.setLayout( null );
 		redScore = new JLabel( redStar );
-		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );
+		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );;
+		try {
+			 f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("src\\Font\\space age.ttf"))).deriveFont(Font.PLAIN,48);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	
 		redScore.setText("test");
 		redScore.setFont(f);
 		redScore.setForeground(Color.white);
