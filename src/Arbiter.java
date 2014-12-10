@@ -98,10 +98,17 @@ public class Arbiter {
 				}
 				m = blue.chooseMove(s);
 			}
+			
+			
+			
 
 			// fail miserably if the move is illegal or if the player fails te
 			// produce a move
 			if (m == null || !s.legalMove(m) || reset) {
+				String stillWalking = (s.whoseTurn() == "red")?"blue" : "red";
+				MyList blankPos = s.ownees(null);
+		
+				s.fill(blankPos,stillWalking,board);
 				System.err.println(s.whoseTurn()
 						+ " did not produce a legal move. Ending game.");
 				GameLoopState.effector.openEffect("charge.wav");
