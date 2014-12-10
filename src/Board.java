@@ -34,6 +34,8 @@ public class Board extends JFrame {
 	private JPanel boardPanel;
 	private JLabel redScore;
 	private JLabel blueScore;
+	private JLabel redBarIndicator;
+	private JLabel blueBarIndicator;
 	private HaxagonUI firstFrame;
 	private Hex selected;
 
@@ -52,6 +54,10 @@ public class Board extends JFrame {
 			"Pic/star_blue.png"));
 	private ImageIcon redStar = new ImageIcon(getClass().getResource(
 			"Pic/star_red.png"));
+	private ImageIcon redBar = new ImageIcon(getClass().getResource(
+			"Pic/bar_red.png"));
+	private ImageIcon blueBar = new ImageIcon(getClass().getResource(
+			"Pic/bar_blue.png"));
 	
 	private int scoreR;
 	private int scoreB;
@@ -129,7 +135,7 @@ public class Board extends JFrame {
 		scoreB = 3;
 		boardPanel.setLayout( null );
 		redScore = new JLabel( redStar );
-		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );;
+		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );
 		try {
 			 f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("src\\Font\\space age.ttf"))).deriveFont(Font.PLAIN,48);
 		} catch (FileNotFoundException e1) {
@@ -142,9 +148,7 @@ public class Board extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-	
-		redScore.setText("test");
+		redScore.setText("");
 		redScore.setFont(f);
 		redScore.setForeground(Color.white);
 		redScore.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -163,6 +167,28 @@ public class Board extends JFrame {
 		blueScore.setVerticalAlignment(SwingConstants.CENTER);
 		boardPanel.add( blueScore );
 		blueScore.setBounds(625 , 550 ,120,100);
+		
+		redBarIndicator = new JLabel( redBar );
+		redBarIndicator.setText("Red");
+		redBarIndicator.setFont(f);
+		redBarIndicator.setForeground(Color.white);
+		redBarIndicator.setHorizontalTextPosition(SwingConstants.CENTER);
+		redBarIndicator.setHorizontalAlignment(SwingConstants.LEFT);
+		redBarIndicator.setVerticalTextPosition(SwingConstants.CENTER);
+		redBarIndicator.setVerticalAlignment(SwingConstants.CENTER);
+		boardPanel.add( redBarIndicator );
+		redBarIndicator.setBounds( 0, 25 ,247,55);
+		
+		blueBarIndicator = new JLabel( blueBar );
+		blueBarIndicator.setText("Blue");
+		blueBarIndicator.setFont(f);
+		blueBarIndicator.setForeground(Color.white);
+		blueBarIndicator.setHorizontalTextPosition(SwingConstants.CENTER);
+		blueBarIndicator.setHorizontalAlignment(SwingConstants.RIGHT);
+		blueBarIndicator.setVerticalTextPosition(SwingConstants.CENTER);
+		blueBarIndicator.setVerticalAlignment(SwingConstants.CENTER);
+		boardPanel.add( blueBarIndicator );
+		blueBarIndicator.setBounds( 800-247, 25 ,247,55);
 		// ------------- END DRAW ON PANEL -------------
 
 		// ------------- ADD MOUSE ACTION -------------
