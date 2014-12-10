@@ -102,8 +102,11 @@ public class Board extends JFrame {
 				g2.setStroke(new BasicStroke(3));
 				Hexpos[] lastMove = getGameState().getLastHexpos();
 				for (Hex h : hexList) {
-					if(lastMove[0] != null && (h.equal(lastMove[0]) || h.equal(lastMove[1])))
-						g.setColor(Color.orange);
+					if(lastMove[0] != null && h.equal(lastMove[0]) )
+						g.setColor(Color.white);
+					else if(lastMove[0] != null && h.equal(lastMove[1]))
+						g.setColor(Color.green);
+					
 					else
 						g.setColor(h.getBg()); // color for background
 					g.fillPolygon(h);

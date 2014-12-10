@@ -108,7 +108,7 @@ public class Arbiter {
 			}
 
 			// apply move
-			s.applyMove(m);
+			if(m!=null)s.applyMove(m);
 
 			// paint new situation
 			s.paint(board);
