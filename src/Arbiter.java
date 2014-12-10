@@ -125,6 +125,7 @@ public class Arbiter {
 		int redScore =s.getnRed() + ((stillWalking == "red")?s.getnEmpty():0);
 		int blueScore = s.getnBlue() + ((stillWalking == "blue")?s.getnEmpty():0);
 		board.setScore(redScore,blueScore);
+		board.setPlayer(s.whoseTurn().equals("red") ? 1 : 2 );
 		String winner = redScore > blueScore ? "Red is the winner!" : (blueScore==redScore)? "Draw!" : "Blue is the winner!";
 
 		System.err.println(s.whoseTurn()
