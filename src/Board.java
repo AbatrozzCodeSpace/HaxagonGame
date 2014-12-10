@@ -33,6 +33,8 @@ public class Board extends JFrame {
 	public static final Color adjColor[] = { new Color(1.0f, 1.0f, 1.0f, 0.3f), // Transparent
 																				// White
 			new Color(200, 8, 255, 125), new Color(250, 126, 250, 125) };
+	
+	public static final Color beforeAfterMoveColor[] = {new Color(192,234,251,175),new Color(0,189,255,175),new Color(251,207,192,175),new Color(255,36,0,175)};
 
 	private JPanel boardPanel;
 	private JLabel redScore;
@@ -108,11 +110,16 @@ public class Board extends JFrame {
 				g2.setStroke(new BasicStroke(3));
 				Hexpos[] lastMove = getGameState().getLastHexpos();
 				for (Hex h : hexList) {
-					if(lastMove[0] != null && h.equal(lastMove[0]) )
-						g.setColor(Color.white);
-					else if(lastMove[0] != null && h.equal(lastMove[1]))
-						g.setColor(Color.green);
-					
+					State s = getGameState();
+					if(lastMove[0] != null && h.equal(lastMove[0]) ){
+						if(s.whoseTurn()=="blue")g.setColor(beforeAfterMoveColor[2]);
+						else g.setColor(beforeAfterMoveColor[0]);
+					}
+						
+					else if(lastMove[0] != null && h.equal(lastMove[1])){
+						if(s.whoseTurn()=="blue")g.setColor(beforeAfterMoveColor[3]);
+						else g.setColor(beforeAfterMoveColor[1]);
+					}
 					else
 						g.setColor(h.getBg()); // color for background
 					g.fillPolygon(h);
