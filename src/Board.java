@@ -68,11 +68,7 @@ public class Board extends JFrame {
 	private int scoreB;
 
 	public void setColorTwoSecond( Graphics g, Color colorBefore,Color colorAfter){
-	/*	TwoSecondThread thread = new TwoSecondThread(g, colorBefore, colorAfter);
-		Thread t1 = new Thread(thread);
-		t1.start();*/
 		g.setColor(colorBefore);
-
 	}
 	public Board(int size, State state, HaxagonUI ui) {
 		 bgImage = null;
