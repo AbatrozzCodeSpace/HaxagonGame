@@ -113,7 +113,10 @@ public class Board extends JFrame {
 				Hexpos[] lastMove = getGameState().getLastHexpos();
 				for (Hex h : hexList) {
 					State s = getGameState();
-					if(lastMove[0] != null && h.equal(lastMove[0]) ){
+					if(!h.getBg().equals(adjColor[0])) {
+						g.setColor(h.getBg());
+					}
+					else if(lastMove[0] != null && h.equal(lastMove[0]) ){
 						if(s.whoseTurn()=="blue")g.setColor(beforeAfterMoveColor[2]);
 						else g.setColor(beforeAfterMoveColor[0]);
 					}
