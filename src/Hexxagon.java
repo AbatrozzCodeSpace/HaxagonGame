@@ -5,9 +5,6 @@
 
 /* The actual game... */
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Hexxagon {
 	public static final int INVALID = -1;
