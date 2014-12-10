@@ -53,7 +53,6 @@ public class Board extends JFrame {
 	
 	public Board(int size, State state, HaxagonUI ui) {
 		setResizable(false);
-		getContentPane().add(new JLabel(bgIcon));
 		setTitle("Haxagon");
 		this.state = state;
 		firstFrame = ui;
@@ -85,6 +84,7 @@ public class Board extends JFrame {
 		boardPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponents(g);
+				getContentPane().add(new JLabel(bgIcon));
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setStroke(new BasicStroke(3));
 				for (Hex h : hexList) {
@@ -119,6 +119,7 @@ public class Board extends JFrame {
 				}
 			}
 		};
+		
 		// add label for score
 		scoreR = 3;
 		scoreB = 3;
@@ -194,6 +195,7 @@ public class Board extends JFrame {
 							selected = null;
 							for (Hex h : hexList)
 								h.setBg(adjColor[0]);
+							
 						}
 						
 						break;
@@ -246,7 +248,7 @@ public class Board extends JFrame {
 		for (Hex h : hexList) {
 			h.setValue(state[h.getI()][h.getJ()]);
 		}
-		getContentPane().add(new JLabel(bgIcon));
+		//getContentPane().add(new JLabel(bgIcon));
 		repaint();
 	}
 	
