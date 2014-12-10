@@ -4,17 +4,20 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,8 +44,8 @@ public class Board extends JFrame {
 	private State state;
 	
 	private static Move move;
-	private ImageIcon bgIcon = new ImageIcon(getClass().getResource(
-			"Pic/space_800_700.png"));
+
+	private BufferedImage bgImage;
 	private ImageIcon blueBall = new ImageIcon(getClass().getResource(
 			"Pic/WaterBall.png"));
 	private ImageIcon redBall = new ImageIcon(getClass().getResource(
@@ -57,6 +60,11 @@ public class Board extends JFrame {
 	private int scoreB;
 	
 	public Board(int size, State state, HaxagonUI ui) {
+		 bgImage = null;
+		try {
+			bgImage = ImageIO.read(new File("src\\Pic\\space_800_700.png"));
+		} catch (IOException e) {
+		}
 		setResizable(false);
 		setTitle("Haxagon");
 		this.state = state;
@@ -89,7 +97,7 @@ public class Board extends JFrame {
 		boardPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponents(g);
-				getContentPane().add(new JLabel(bgIcon));
+				g.drawImage(bgImage,0,0,null);
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setStroke(new BasicStroke(3));
 				for (Hex h : hexList) {
@@ -267,7 +275,7 @@ public class Board extends JFrame {
 		for (Hex h : hexList) {
 			h.setValue(state[h.getI()][h.getJ()]);
 		}
-		//getContentPane().add(new JLabel(bgIcon));
+
 		repaint();
 	}
 	
