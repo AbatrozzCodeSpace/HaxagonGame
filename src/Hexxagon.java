@@ -105,6 +105,8 @@ public class Hexxagon {
 			return new MonteCarloPlayer(0,1000);
 		case 8:
 			return new MewPlayer(2);
+		case 9:
+			return new MickAI(3);
 		default:
 			return new Human();
 		}
@@ -121,7 +123,7 @@ public class Hexxagon {
 			public void run() {
 				p1 = getPlayer(ui.getP1());
 				p2 = getPlayer(ui.getP2());
-				arbi = new Arbiter(p1, p2, 1000, 1000, gameLoop, state, board);
+				arbi = new Arbiter(p1, p2, 100, 100, gameLoop, state, board);
 				arbi.showGame();
 			}
 		});

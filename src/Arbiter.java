@@ -98,52 +98,54 @@ public class Arbiter {
 				}
 				m = blue.chooseMove(s);
 			}
-			
-			
-			
+					
 
 			// fail miserably if the move is illegal or if the player fails te
 			// produce a move
 			if (m == null || !s.legalMove(m) || reset) {
-				String stillWalking = (s.whoseTurn() == "red")?"blue" : "red";
-				MyList blankPos = s.ownees(null);
-		
-				s.fill(blankPos,stillWalking,board);
-				board.setScore(s.getnRed() + ((stillWalking == "red")?s.getnEmpty():0), s.getnBlue() + ((stillWalking == "blue")?s.getnEmpty():0));
-				System.err.println(s.whoseTurn()
-						+ " did not produce a legal move. Ending game.");
-				GameLoopState.effector.openEffect("charge.wav");
-				String[] choices = { "Restart Game" };
-				int response = JOptionPane.showOptionDialog(null // Center in
-																	// window.
-						, "The winner is "+s.otherPlayer(s.whoseTurn())+"!" // Message
-						, "Game Ended!" // Title in titlebar
-						, JOptionPane.YES_NO_OPTION // Option type
-						, JOptionPane.PLAIN_MESSAGE // messageType
-						, null // Icon (none)
-						, choices // Button text as above.
-						, "None of your business" // Default button's label
-				);
-				if (response == 0){
-					Hexxagon.resetMatch();
-				}
-				return;
 				
+					endGame();
 			}
 
 			// apply move
 			s.applyMove(m);
 
 			// paint new situation
-			s.applyMove(m);
-
 			s.paint(board);
 
 		}
-		
+		endGame();
 	}
 
-	
+	public void endGame(){
+		String stillWalking = (s.whoseTurn() == "red")?"blue" : "red";
+		MyList blankPos = s.ownees(null);
+
+		s.fill(blankPos,stillWalking,board);
+		int redScore =s.getnRed() + ((stillWalking == "red")?s.getnEmpty():0);
+		int blueScore = s.getnBlue() + ((stillWalking == "blue")?s.getnEmpty():0);
+		board.setScore(redScore,blueScore);
+		String winner = redScore > blueScore ? "Red is the winner!" : (blueScore==redScore)? "Draw!" : "Blue is the winner!";
+
+		System.err.println(s.whoseTurn()
+				+ " did not produce a legal move. Ending game.");
+		GameLoopState.effector.openEffect("charge.wav");
+		String[] choices = { "Restart Game" };
+		
+		int response = JOptionPane.showOptionDialog(null // Center in
+															// window.
+				, winner // Message
+				, "Game Ended!" // Title in titlebar
+				, JOptionPane.YES_NO_OPTION // Option type
+				, JOptionPane.PLAIN_MESSAGE // messageType
+				, null // Icon (none)
+				, choices // Button text as above.
+				, "None of your business" // Default button's label
+		);
+		if (response == 0){
+			Hexxagon.resetMatch();
+		}
+	}
 
 
 	public State evalGame() {
