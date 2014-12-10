@@ -122,6 +122,7 @@ public class State {
 		return ownees;
 	}
 
+
 	/* change ownership of a given hexpos */
 	public boolean changeOwner(String newOwner, Hexpos hp) {
 		String oldOwner = (String) owner.get(hp);
@@ -143,7 +144,59 @@ public class State {
 		owner.put(hp, newOwner);
 
 		return true;
+
+
+
+    }
+
+	public String toString(){
+		String tmp = "";
+		for (int r = 1; r <= 17; r++) { // for every row
+			int c = ((r % 2 == 0) ? 2 : 1); // what col to start?
+			for (; c <= 9; c += 2) {
+				Hexpos h = new Hexpos(r, c);
+				if (h.onBoard()){
+				  	tmp += "[ " + h.hashCode() + " : " + owner(h ) + "] " ;
+				
+				}
+			}
+		}
+		return tmp;
+		
 	}
+
+	public int canWalk(String side, Hexpos pos){
+		// 0 someone there's 1 empty but cant 2 empty and can
+		State state = this;
+		if(side != "red" && side != "blue")
+			return -1;
+		if(state.owner(pos) != null)
+			return 0;
+		MyList walkArea = pos.neighbours();
+		for(Object tmp : walkArea){
+			if(state.owner((Hexpos)tmp) == side)
+				return  2;
+		}
+		return 1;
+	}
+	public int canJump(String side, Hexpos pos){
+		State state = this;
+		if(side != "red" && side != "blue")
+			return -1;
+		if(state.owner(pos) != null)
+			return 0;
+		MyList jumpArea = pos.jumpNeighbours();
+		for(Object tmp : jumpArea){
+			if(state.owner((Hexpos)tmp) == side)
+				return  2;
+		}
+		return 1;
+	}
+ 
+  
+
+ 
+
 
 	/* take over all neighbouring pieces */
 	private boolean takeNeighbours(String player, Hexpos hp) {
@@ -175,8 +228,29 @@ public class State {
 				// the goal position must be empty
 				(owner(m.end) == null) &&
 		// the goal position can be reached with a step or a jump
-		(m.begin.neighbour(m.end) || m.begin.jumpNeighbour(m.end)));
-	}
+
+		(m.begin.neighbour(m.end) || 
+		 m.begin.jumpNeighbour(m.end)));
+    }
+
+    
+
+    /* returns a *new* State that results from applying move m, without
+     * changing the current object
+     */
+
+    public State tryDoubleMove(Move m,Move m2){
+    	State newstate = new State(this);
+
+    	if (newstate.applyMove(m))
+    	    if(newstate.applyMove(m2))
+    	    	return newstate;
+    	
+    	// apparently, move was not succesful
+    	return null;
+    }
+
+
 
 	public boolean applyMove(Move m) {
 		// illegal move
@@ -281,9 +355,18 @@ public class State {
 
 	}
 
+
 	public MyList findMovesTo(Hexpos end) {
 		return findMovesTo(end, turn);
 	}
+
+
+    public MyList findMovesByString(String s){
+    	return findMoves(s);
+    }
+
+    /* paint a state */
+    
 
 	/*
 	 * Get all moves that player can do. We use findMovesTo, to avoid similar

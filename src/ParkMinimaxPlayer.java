@@ -1,25 +1,59 @@
 /* Liesbeth Flobbe
  * Hexxagon game
- * file: MinimaxPlayer.java
+ * file: ParkMinimaxPlayer.java
  */
 
 import java.util.*;
 
-public class MinimaxPruningPlayer implements Player {
+public class ParkMinimaxPlayer implements Player {
     String me;
     int maxdepth;
-    private static int MAX_TOP = 5;
+	int secureScore;
+	int noneSecureNullState;
+	int noneSecureWalkState;
+	int noneSecureJumpState;
 
     // Assign an evaluation value to a state: higher values are better
     private int evalState(State s) {
-	if (me.equals("red"))
-	    return s.getnRed() - s.getnBlue();
-	
-	return s.getnBlue() - s.getnRed();
+		int score = evalStateSide(s, "red") - evalStateSide(s, "blue");
+		return (me == "red")?score:-score;
+
+    }	
+    private int evalStateSide(State s, String side) {
+		int score = 0;
+		if(side != "red" && side !="blue")
+			return -1;
+		String opp = (side == "red")?"blue":"red";
+		MyList Pawns = s.ownees(side);
+		for(Object pawn : Pawns){
+			int thisScore = secureScore;
+			for(Object neighbour : ((Hexpos)pawn).neighbours()){
+				Hexpos t = (Hexpos)neighbour;
+				int tmp = s.canWalk(opp, t);
+				if(tmp == 0)
+					continue;
+				else {
+					tmp = noneSecureNullState;
+					if(tmp == 2){
+						thisScore = noneSecureWalkState;
+						break;
+					}
+					else if(thisScore != noneSecureJumpState && s.canJump(opp, t) == 2)
+						thisScore = noneSecureJumpState;
+				}
+			}
+			score += thisScore;
+		}
+		return score;
     }	
 
-    public MinimaxPruningPlayer(int md) {
-	maxdepth = md;
+    public ParkMinimaxPlayer(int md, int secureScore, int noneSecureNullState, int noneSecureJumpState, int noneSecureWalkState) {
+		maxdepth = md;
+		this.secureScore = secureScore;
+		this.noneSecureNullState = noneSecureNullState;
+		this.noneSecureWalkState = noneSecureNullState;
+		this.noneSecureJumpState = noneSecureNullState;
+
     }
 
     /* evalMove returns the minimax-value of a Move m that should be applied
@@ -47,65 +81,14 @@ public class MinimaxPruningPlayer implements Player {
 
 	    // Iterate over all moves
 	    Iterator it = moves.iterator();
-	    
-	    int[] topScores = new int[MAX_TOP];
-	    Move[] topMoves = new Move[MAX_TOP];
-	    for(int i=0;i<MAX_TOP;i++){
-	    	if(newstate.whoseTurn().equals(me))
-	    		topScores[i] = Integer.MIN_VALUE;
-	    	else
-	    		topScores[i] = Integer.MAX_VALUE;
-	    }
-	    int i=0;
-	    while(it.hasNext()){
-	    	Move newmove = (Move) it.next();
-	    	boolean change = false;
-			int score = evalState(newstate.tryMove(newmove));
-			if(depth==maxdepth){
-				System.out.print(score+ " ");
-			}
-			if(newstate.whoseTurn().equals(me)){
-				for(i=0;i<MAX_TOP;i++){
-					if(score>topScores[i]){
-						change = true;
-						break;
-					}
-				}
-			}
-			else{
-				for(i=0;i<MAX_TOP;i++){
-					if(score<topScores[i]){
-						change = true;
-						break;
-					}
-				}
-			}
-			if(change){
-				for(int j=MAX_TOP-2;j>=i;j--){
-					topScores[j+1] = topScores[j];
-					topMoves[j+1] = topMoves[j];
-				}
-				topMoves[i] = newmove;
-				topScores[i] = score;
-			}
-	    }
-	    
-//	    if(depth==maxdepth){
-//	    	System.out.println("\ntop ");
-//	    for(i=0;i<MAX_TOP;i++){
-//	    	System.out.println(topScores[i]);
-//	    }
-//	    System.out.println("----------------------------");
-//	    }
 
 	    // We already know there is at least one move, so use it to
 	    // initialize minimaxvalue
-	    int minimaxvalue = evalMove(topMoves[0], newstate, depth - 1);
-	    
-	    i=1;
+	    int minimaxvalue = evalMove((Move) it.next(), newstate, depth - 1);
+
 	    // now the rest of the moves
-	    while (i<MAX_TOP && topMoves[i]!=null) {
-		Move newmove = topMoves[i];
+	    while (it.hasNext()) {
+		Move newmove = (Move) it.next();
 		int eval = evalMove(newmove, newstate, depth - 1);
 
 		// if this is our turn, save the maximumvalue, otherwise
@@ -114,7 +97,6 @@ public class MinimaxPruningPlayer implements Player {
 		    minimaxvalue = Math.max(minimaxvalue, eval);
 		else // opponent's turn
 		    minimaxvalue = Math.min(minimaxvalue, eval);
-		i++;
 	    }
 		
 	    return minimaxvalue;
