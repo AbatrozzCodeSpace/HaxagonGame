@@ -22,8 +22,9 @@ public class Board extends JFrame {
 	private static final int start = 50;
 	private static final int r = 40;
 	public static final Color teamColor[] = { Color.red, Color.blue };
-	public static final Color adjColor[] = { Color.white, Color.green,
-			Color.yellow };
+	public static final Color adjColor[] = { new Color(1.0f, 1.0f, 1.0f, 0.5f), //Transparent White
+												new Color(0,179,18,255),
+												Color.yellow };
 
 	private JPanel boardPanel;
 	private JLabel redScore;
@@ -82,7 +83,7 @@ public class Board extends JFrame {
 				for (Hex h : hexList) {
 					g.setColor(h.getBg()); // color for background
 				g.fillPolygon(h);
-					g.setColor(Color.black); // color for line
+					g.setColor(Color.white); // color for line
 					g.drawPolygon(h);
 					int value = h.getValue();
 					if (value > 0) {
@@ -138,7 +139,7 @@ public class Board extends JFrame {
 						if(h1.getBg().equals(adjColor[0])) {
 							if ( h1.getValue() == -1 || whose != h1.getValue() ) return;
 							for (Hex h : hexList) {
-								h.setBg(adjColor[0]);
+								h.setBg(new Color(1f,1f,1f,0.5f) );
 							}
 							System.out.println("selected "+h1 + "value = " + h1.getValue());
 							selected = h1;
@@ -147,6 +148,9 @@ public class Board extends JFrame {
 								if (distance < 3) {
 									if ( h2.getValue() == -1 ) {
 										h2.setBg(adjColor[distance]);
+									}
+									if ( distance == 0 ) {
+										h2.setBg(Color.getHSBColor(0, 0, 0.2f));
 									}
 								}
 							}

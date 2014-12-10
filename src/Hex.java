@@ -17,6 +17,7 @@ public class Hex extends Polygon {
 		this.yCenter = yCenter;
 		value = Hexxagon.BLANK;
 		bg = Board.adjColor[0];
+		//bg = new Color( 1.0f,1.0f,1.0f, 0.5f );
 	}
 	
 	/////////// GETTERS AND SETTERS ///////////
