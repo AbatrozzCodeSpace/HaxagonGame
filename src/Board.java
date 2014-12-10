@@ -131,7 +131,7 @@ public class Board extends JFrame {
 		redScore = new JLabel( redStar );
 		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );;
 		try {
-			 f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("Font/cubic,ttf"))).deriveFont(Font.PLAIN,24);
+			 f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("src\\Font\\space age.ttf"))).deriveFont(Font.PLAIN,48);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
