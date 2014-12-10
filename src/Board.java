@@ -46,6 +46,7 @@ public class Board extends JFrame {
 	private int scoreB;
 	
 	public Board(int size, State state, HaxagonUI ui) {
+		setResizable(false);
 		getContentPane().add(new JLabel(bgIcon));
 		setTitle("Haxagon");
 		this.state = state;
