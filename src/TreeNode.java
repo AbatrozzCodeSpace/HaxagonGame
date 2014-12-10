@@ -9,7 +9,7 @@ public class TreeNode {
     static double epsilon = 1e-6;
     public static int expandThd = 10;
     public static int maxDepth = 0;
-    private static int acceptDiff = 20;
+    private static int acceptDiff = 30;
     public static int nowScore = 0;
     private static boolean print = false;
     public static int count = 0;
@@ -158,7 +158,7 @@ public class TreeNode {
 	
     private double randomSimulate(State s){
     	while(true){
-    		Move m = s.findRandomMove(s.whoseTurn());
+    		Move m = s.findSmartRandomMove(s.whoseTurn());
     		if(m==null){
     			if(s.getnBlue()+s.getnRed() == 58){
     				if(me.equals("red")){
