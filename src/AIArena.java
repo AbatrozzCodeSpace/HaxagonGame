@@ -31,8 +31,8 @@ public class AIArena {
 							blue = p2.player;
 							}
 							else{
-								red = p1.player;
-								blue = p2.player;
+								red = p2.player;
+								blue = p1.player;
 							}
 							// ask the right player to make a move
 							if (s.whoseTurn().equals("red")) {
