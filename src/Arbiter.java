@@ -105,6 +105,7 @@ public class Arbiter {
 			if (m == null || !s.legalMove(m) || reset) {
 				
 					endGame();
+				return;
 			}
 
 			// apply move

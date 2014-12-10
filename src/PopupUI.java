@@ -112,10 +112,10 @@ public class PopupUI extends JFrame {
 		});
 
 		// add components to this frame
-		add(new JLabel("Player 1(RED)"));
+		add(new JLabel("Player 1"));
 		add(typeList);
 		add(buttonSelect);
-		add(new JLabel("Player 2(BLUE)"));
+		add(new JLabel("Player 2"));
 		add(typeList2);
 
 		pack();
