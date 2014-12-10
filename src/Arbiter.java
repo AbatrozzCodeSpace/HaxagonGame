@@ -109,6 +109,7 @@ public class Arbiter {
 				MyList blankPos = s.ownees(null);
 		
 				s.fill(blankPos,stillWalking,board);
+				board.setScore(s.getnRed() + ((stillWalking == "red")?s.getnEmpty():0), s.getnBlue() + ((stillWalking == "blue")?s.getnEmpty():0));
 				System.err.println(s.whoseTurn()
 						+ " did not produce a legal move. Ending game.");
 				GameLoopState.effector.openEffect("charge.wav");
