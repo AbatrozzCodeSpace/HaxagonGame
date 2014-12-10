@@ -22,9 +22,9 @@ public class Board extends JFrame {
 	private static final int start = 50;
 	private static final int r = 40;
 	public static final Color teamColor[] = { Color.red, Color.blue };
-	public static final Color adjColor[] = { new Color(1.0f, 1.0f, 1.0f, 0.5f), //Transparent White
-												new Color(0,179,18,255),
-												Color.yellow };
+	public static final Color adjColor[] = { new Color(1.0f, 1.0f, 1.0f, 0.3f), //Transparent White
+												new Color(200,8,255,125),
+												new Color(250,126,250,125) };
 
 	private JPanel boardPanel;
 	private JLabel redScore;
@@ -42,6 +42,12 @@ public class Board extends JFrame {
 			"Pic/WaterBall.png"));
 	private ImageIcon redBall = new ImageIcon(getClass().getResource(
 			"Pic/FireBall.png"));
+	
+	private ImageIcon blueStar = new ImageIcon(getClass().getResource(
+			"Pic/star_blue.png"));
+	private ImageIcon redStar = new ImageIcon(getClass().getResource(
+			"Pic/star_red.png"));
+	
 	private int scoreR;
 	private int scoreB;
 	
@@ -117,26 +123,27 @@ public class Board extends JFrame {
 		scoreR = 3;
 		scoreB = 3;
 		boardPanel.setLayout( null );
-		redScore = new JLabel("RED : " + scoreR );
+		redScore = new JLabel( redStar );
 		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );
+		redScore.setText("test");
 		redScore.setFont(f);
-		redScore.setForeground(Color.red);
+		redScore.setForeground(Color.white);
 		redScore.setHorizontalTextPosition(SwingConstants.CENTER);
 		redScore.setHorizontalAlignment(SwingConstants.CENTER);
 		redScore.setVerticalTextPosition(SwingConstants.CENTER);
 		redScore.setVerticalAlignment(SwingConstants.CENTER);
 		boardPanel.add( redScore );
-		redScore.setBounds( 0, 600 ,200,50);
+		redScore.setBounds( 50, 550 ,120,100);
 		
-		blueScore = new JLabel("BLUE : " + scoreB );
+		blueScore = new JLabel( blueStar );
 		blueScore.setFont(f);
-		blueScore.setForeground(Color.blue);
+		blueScore.setForeground(Color.black);
 		blueScore.setHorizontalTextPosition(SwingConstants.CENTER);
 		blueScore.setHorizontalAlignment(SwingConstants.CENTER);
 		blueScore.setVerticalTextPosition(SwingConstants.CENTER);
 		blueScore.setVerticalAlignment(SwingConstants.CENTER);
 		boardPanel.add( blueScore );
-		blueScore.setBounds( 575, 600 ,200,50);
+		blueScore.setBounds(625 , 550 ,120,100);
 		// ------------- END DRAW ON PANEL -------------
 
 		// ------------- ADD MOUSE ACTION -------------
@@ -153,7 +160,7 @@ public class Board extends JFrame {
 						if(h1.getBg().equals(adjColor[0])) {
 							if ( h1.getValue() == -1 || whose != h1.getValue() ) return;
 							for (Hex h : hexList) {
-								h.setBg(new Color(1f,1f,1f,0.5f) );
+								h.setBg(adjColor[0] );
 							}
 							System.out.println("selected "+h1 + "value = " + h1.getValue());
 							selected = h1;
@@ -246,8 +253,8 @@ public class Board extends JFrame {
 	public void setScore( int red, int blue ) {
 		scoreR = red;
 		scoreB = blue;
-		redScore.setText("RED: " + scoreR);
-		blueScore.setText("BLUE: " + scoreB);
+		redScore.setText( "" + scoreR);
+		blueScore.setText("" + scoreB);
 	}
 
 	public int distance(Hex h1, Hex h2) {
