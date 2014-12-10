@@ -107,6 +107,8 @@ public class Hexxagon {
 			return new MewPlayer(2);
 		case 9:
 			return new MickAI(3);
+		case 10:
+			return new PruningParkMinimaxPlayer(3, 100, 60, 48, 30);
 		default:
 			return new Human();
 		}
