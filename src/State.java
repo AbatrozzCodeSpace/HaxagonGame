@@ -5,9 +5,12 @@
 
 /* the (actual or possible) state of the game */
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public class State {
@@ -356,9 +359,6 @@ public class State {
 	}
 
 
-	public MyList findMovesTo(Hexpos end) {
-		return findMovesTo(end, turn);
-	}
 
 
     public MyList findMovesByString(String s){
@@ -372,53 +372,14 @@ public class State {
 	 * Get all moves that player can do. We use findMovesTo, to avoid similar
 	 * moves (moves that result in the same state.
 	 */
-	public MyList findMoves(String player) {
-		// Check if player is valid (so we don't have to worry about
-		// null pointers later).
-		if (player == null || !(player.equals("red") || player.equals("blue")))
-			return null;
 
-		MyList moves = new MyList();
 
-		// Iterate over all Hexpos's
-		Set set = owner.keySet();
-		Iterator it = set.iterator();
-		while (it.hasNext()) {
-			Hexpos hp = (Hexpos) it.next();
-			MyList movesTo = findMovesTo(hp, player);
-			if (movesTo != null)
-				moves.addAll(findMovesTo(hp, player));
-		}
-
-		return moves;
-	}
-
-	public Move findRandomMove(String player) {
-		// Check if player is valid (so we don't have to worry about
-		// null pointers later).
-		if (player == null || !(player.equals("red") || player.equals("blue")))
-			return null;
-
-		MyList moves = new MyList();
-
-		// Iterate over all Hexpos's
-		Set set = owner.keySet();
-
-		Iterator it = set.iterator();
-		while (it.hasNext()) {
-			Hexpos hp = (Hexpos) it.next();
-			MyList movesTo = findMovesTo(hp, player);
-			if (movesTo != null)
-				moves.addAll(findMovesTo(hp, player));
-		}
-
-		int random = (int) (Math.random() * moves.size());
-		return (Move) moves.get(random);
-	}
+	
 
 	public MyList findMoves() {
 		return findMoves(turn);
 	}
+	
 
 	/* paint a state */
 	public void paint(Board board) {
@@ -447,5 +408,178 @@ public class State {
 		board.setScore( getnRed() , getnBlue());
 
 	}
+
+    public MyList findOneTileMovesTo(Hexpos end, String player) {
+  // check if goal position is empty
+  if (owner.get(end) != null)
+      return null;
+  
+  // make a list to store the moves
+  MyList moves = new MyList();
+
+  // try to find *one* neighbour-step move
+  MyList neighbours = end.neighbours();      // neighbours
+  Iterator it = neighbours.iterator();
+  while(it.hasNext()) {
+      Hexpos begin = (Hexpos) it.next();
+      if (owner.get(begin) != null &&        // check if begin pos is
+    owner.get(begin).equals(player)) { // owned by player
+    moves.add(new Move(begin, end, player));
+      }
+  }
+
+  return moves;
+         
+    }
+    
+    public MyList findOneTileMoves(String player) {
+      // Check if player is valid (so we don't have to worry about
+      // null pointers later).
+      if (player == null || ! (player.equals("red") || 
+                   player.equals("blue")))
+          return null;
+
+      MyList moves = new MyList();
+
+      // Iterate over all Hexpos's
+      Set set = owner.keySet();
+      Iterator it = set.iterator();
+      while(it.hasNext()) {
+          Hexpos hp = (Hexpos) it.next();
+          MyList movesTo = findOneTileMovesTo(hp, player);
+          if (movesTo != null)
+        moves.addAll(movesTo);
+      }
+
+      return moves;
+    }
+    
+    public MyList findTwoTilesMovesTo(Hexpos end, String player) {
+      // check if goal position is empty
+      if (owner.get(end) != null)
+          return null;
+      
+      // make a list to store the moves
+      MyList moves = new MyList();
+
+      // try to find *one* neighbour-step move
+      MyList neighbours = end.jumpNeighbours();      // neighbours
+      Iterator it = neighbours.iterator();
+      while(it.hasNext()) {
+          Hexpos begin = (Hexpos) it.next();
+          if (owner.get(begin) != null &&        // check if begin pos is
+        owner.get(begin).equals(player)) { // owned by player
+        moves.add(new Move(begin, end, player));
+          }
+      }
+      return moves;
+    }
+    
+    public MyList findTwoTilesMoves(String player) {
+      // Check if player is valid (so we don't have to worry about
+      // null pointers later).
+      if (player == null || ! (player.equals("red") || 
+                   player.equals("blue")))
+          return null;
+
+      MyList moves = new MyList();
+
+      // Iterate over all Hexpos's
+      Set set = owner.keySet();
+      Iterator it = set.iterator();
+      while(it.hasNext()) {
+          Hexpos hp = (Hexpos) it.next();
+          MyList movesTo = findTwoTilesMovesTo(hp, player);
+          if (movesTo != null)
+        moves.addAll(movesTo);
+      }
+
+      return moves;
+    }
+    
+    public Move findSmartRandomMove(String player){
+      if (player == null || ! (player.equals("red") || 
+             player.equals("blue")))
+        return null;
+    
+    // Iterate over all Hexpos's
+    Set set = owner.keySet();
+    Iterator it = set.iterator();
+    List<Hexpos> hp = new ArrayList<Hexpos>();
+    //Collections.shuffle(it);
+    while(it.hasNext()){
+      
+      hp.add((Hexpos) it.next());
+    }
+    Collections.shuffle(hp);
+    for(Hexpos h:hp){
+      MyList moves = findOneTileMovesTo(h,player);
+      if(moves!=null && moves.size()!=0){
+        Collections.shuffle(moves);
+        return (Move) moves.get(0);
+      }
+    }
+    for(Hexpos h:hp){
+      MyList moves = findTwoTilesMovesTo(h,player);
+      if(moves !=null && moves.size()!=0){
+        Collections.shuffle(moves);
+        return (Move) moves.get(0);
+      }
+    }
+    return null;
+    }
+
+    public MyList findMovesTo(Hexpos end) {
+  return findMovesTo(end, turn);
+    }
+    public MyList findMoves(String player) {
+    	  // Check if player is valid (so we don't have to worry about
+    	  // null pointers later).
+    	  if (player == null || ! (player.equals("red") || 
+    	               player.equals("blue")))
+    	      return null;
+
+    	  MyList moves = new MyList();
+
+    	  // Iterate over all Hexpos's
+    	  Set set = owner.keySet();
+    	  Iterator it = set.iterator();
+    	  while(it.hasNext()) {
+    	      Hexpos hp = (Hexpos) it.next();
+    	      MyList movesTo = findMovesTo(hp, player);
+    	      if (movesTo != null)
+    	    moves.addAll(movesTo);
+    	  }
+
+    	  return moves;
+    	    }
+
+    	  public Move findRandomMove(String player) {
+    	  // Check if player is valid (so we don't have to worry about
+    	  // null pointers later).
+    	    if (player == null || ! (player.equals("red") ||
+    	                  player.equals("blue")))
+    	      return null;
+
+    	    MyList moves = new MyList();
+
+    	    // Iterate over all Hexpos's
+    	    Set set = owner.keySet();
+
+    	    Iterator it = set.iterator();
+    	    while(it.hasNext()) {
+    	      Hexpos hp = (Hexpos) it.next();
+    	      MyList movesTo = findMovesTo(hp, player);
+    	      if (movesTo != null)
+    	         moves.addAll(findMovesTo(hp, player));
+    	      }
+    	      if(moves.size()==0){
+    	        return null;
+    	    }
+    	    int random = (int)(Math.random()*moves.size());
+    	    return (Move) moves.get(random);
+    	  }
+
+
 
 }
