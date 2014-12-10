@@ -56,4 +56,12 @@ public class Hex extends Polygon {
 	public void setBg(Color bg) {
 		this.bg = bg;
 	}
+	
+	public boolean equal(Hexpos hp) {
+		return hp.col() == j+1 && hp.row() == i+1;
+	}
+	
+	public Hexpos convertToHexpos() {
+		return new Hexpos(i+1, j+1);
+	}
 }

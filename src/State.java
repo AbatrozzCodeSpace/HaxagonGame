@@ -25,6 +25,8 @@ public class State {
 
 	// whose turn it is
 	private String turn;
+	
+	private Hexpos[] lastHexpos = new Hexpos[2];
 
 	// construct a state that is a copy of another state
 	public State(State other) {
@@ -90,6 +92,10 @@ public class State {
 
 	public String whoseTurn() {
 		return turn;
+	}
+	
+	public Hexpos[] getLastHexpos() {
+		return lastHexpos;
 	}
 
 	public String otherPlayer(String s) {
@@ -259,7 +265,10 @@ public class State {
 		// illegal move
 		if (!legalMove(m))
 			return false;
-
+		
+		lastHexpos[0] = m.begin;
+		lastHexpos[1] = m.end;
+		
 		// in case of a jump move, empty the beginning square
 		if (m.begin.jumpNeighbour(m.end))
 			changeOwner(null, m.begin);
