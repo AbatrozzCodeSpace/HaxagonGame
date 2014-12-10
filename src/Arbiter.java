@@ -23,6 +23,7 @@ public class Arbiter {
 	Board board;
 	
 	static boolean reset;
+	static boolean restart;
 
 	boolean visibility;
 
@@ -33,6 +34,7 @@ public class Arbiter {
 		this.s = s;
 		this.board = b;
 		reset = false;
+		restart = false;
 		s = new State();
 		visibility = true;
 		
@@ -104,7 +106,11 @@ public class Arbiter {
 			// produce a move
 			if (m == null || !s.legalMove(m) || reset) {
 				
-					endGame();
+				endGame();
+				return;
+			}
+			if(restart){
+				restart = false;
 				return;
 			}
 
@@ -117,7 +123,7 @@ public class Arbiter {
 		}
 		endGame();
 	}
-
+	
 	public void endGame(){
 		String stillWalking = (s.whoseTurn() == "red")?"blue" : "red";
 		MyList blankPos = s.ownees(null);
@@ -132,7 +138,7 @@ public class Arbiter {
 		System.err.println(s.whoseTurn()
 				+ " did not produce a legal move. Ending game.");
 		GameLoopState.effector.openEffect("charge.wav");
-		String[] choices = { "Restart Game" };
+		String[] choices = { "Restart Game","Return to Title" };
 		
 		int response = JOptionPane.showOptionDialog(null // Center in
 															// window.
@@ -146,6 +152,9 @@ public class Arbiter {
 		);
 		if (response == 0){
 			Hexxagon.resetMatch();
+		}
+		else if (response==1){
+			Hexxagon.restartApplication();
 		}
 	}
 
@@ -182,6 +191,9 @@ public class Arbiter {
 
 	public static void reset() {
 		reset = true;
+	}
+	public static void restart(){
+		restart = true;
 	}
 
 }

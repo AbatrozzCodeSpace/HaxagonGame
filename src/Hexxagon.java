@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.HashMap;
 
 /* Liesbeth Flobbe
@@ -48,38 +49,6 @@ public class Hexxagon {
 			});
 			hexxThread.start();
 		}
-	/*	else if(args.length == 3){
-
-			int player1 = Integer.parseInt(args[0]);
-			int player2 = Integer.parseInt(args[1]);
-			int loop = Integer.parseInt(args[2]);
-			HashMap winningPos = new HashMap();
-
-
-			for (int r = 1; r <= 17; r++) { // for every row
-				int c = ((r % 2 == 0) ? 2 : 1); // what col to start?
-				for (; c <= 9; c += 2) {
-					Hexpos h = new Hexpos(r, c);
-					if (h.onBoard()){
-						winningPos.put(h.hashCode(), 0);
-					
-					}
-				}
-			}
-
-			for(int i = 0; i < loop; i++){
-				Player p1 = getPlayer(player1);
-				Player p2 = getPlayer(player2);
-				if(appWin != null) appWin.dispose();
-				appWin = new AppWindow();
-				gameLoop = new GameLoopState();
-				Arbiter a = new Arbiter(p1, p2, 1000, 1000, appWin, gameLoop, false);
-				a.showGamePrint(winningPos);
-			}
-
-
-		
-		}*/
 	}
 
 		
@@ -137,6 +106,30 @@ public class Hexxagon {
 		state = new State();
 		board.setGameState(state);
 		runArbi();
+	}
+	public static void restartApplication(){
+		board.dispose();
+		Arbiter.restart();
+			hexxThread = new Thread(new Runnable() {
+				@Override
+				
+				public void run() {
+					state = new State();
+					ui = new HaxagonUI();
+					board = new Board(5, state, ui);
+					synchronized (state) {
+						try {
+							state.wait();
+						} catch (InterruptedException e) {
+						}
+					}
+					board.gotoMain();
+					gameLoop = new GameLoopState();
+					System.out.println("P1="+ui.getP1()+" P2="+ui.getP2());
+					runArbi();
+				}
+			});
+			hexxThread.start();
 	}
 }
 

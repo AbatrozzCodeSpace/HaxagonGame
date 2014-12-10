@@ -310,6 +310,9 @@ public class Board extends JFrame {
 					Arbiter.reset();
 					Hexxagon.arbiThread.interrupt();
 				}
+				else if (e.getKeyCode() == KeyEvent.VK_T && e.isControlDown()) {
+					Hexxagon.restartApplication();
+				}
 			}
 		};
 		boardPanel.addKeyListener(l);
