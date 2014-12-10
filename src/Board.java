@@ -84,7 +84,7 @@ public class Board extends JFrame {
 				for (Hex h : hexList) {
 					g.setColor(h.getBg()); // color for background
 				g.fillPolygon(h);
-					g.setColor(Color.white); // color for line
+					g.setColor(Color.black); // color for line
 					g.drawPolygon(h);
 					int value = h.getValue();
 					if(value < 1)
