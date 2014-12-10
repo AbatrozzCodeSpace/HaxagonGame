@@ -67,6 +67,13 @@ public class Board extends JFrame {
 	private int scoreR;
 	private int scoreB;
 
+	public void setColorTwoSecond( Graphics g, Color colorBefore,Color colorAfter){
+	/*	TwoSecondThread thread = new TwoSecondThread(g, colorBefore, colorAfter);
+		Thread t1 = new Thread(thread);
+		t1.start();*/
+		g.setColor(colorBefore);
+
+	}
 	public Board(int size, State state, HaxagonUI ui) {
 		 bgImage = null;
 		try {
@@ -102,6 +109,7 @@ public class Board extends JFrame {
 		// ------------- END CREATE HEXAGON -------------
 
 		// ------------- DRAW ON PANEL -------------
+		
 		boardPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponents(g);
@@ -112,13 +120,13 @@ public class Board extends JFrame {
 				for (Hex h : hexList) {
 					State s = getGameState();
 					if(lastMove[0] != null && h.equal(lastMove[0]) ){
-						if(s.whoseTurn()=="blue")g.setColor(beforeAfterMoveColor[2]);
-						else g.setColor(beforeAfterMoveColor[0]);
+						if(s.whoseTurn()=="blue")setColorTwoSecond(g,beforeAfterMoveColor[2],adjColor[0]);
+						else setColorTwoSecond(g,beforeAfterMoveColor[0],adjColor[0]);
 					}
 						
 					else if(lastMove[0] != null && h.equal(lastMove[1])){
-						if(s.whoseTurn()=="blue")g.setColor(beforeAfterMoveColor[3]);
-						else g.setColor(beforeAfterMoveColor[1]);
+						if(s.whoseTurn()=="blue")setColorTwoSecond(g,beforeAfterMoveColor[3],adjColor[0]);
+						else setColorTwoSecond(g,beforeAfterMoveColor[1],adjColor[0]);
 					}
 					else
 						g.setColor(h.getBg()); // color for background
@@ -152,7 +160,6 @@ public class Board extends JFrame {
 				}
 			}
 		};
-		
 		// add label for score
 		scoreR = 3;
 		scoreB = 3;
