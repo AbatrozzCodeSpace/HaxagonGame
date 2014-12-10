@@ -29,7 +29,7 @@ public class PopupUI extends JFrame {
 	public PopupUI() {
 		super("Pick an implementation for player");
 
-		setPreferredSize(new Dimension(590, 120));
+		setPreferredSize(new Dimension(605, 120));
 		setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		setResizable(false);
 
@@ -112,10 +112,10 @@ public class PopupUI extends JFrame {
 		});
 
 		// add components to this frame
-		add(new JLabel("Player 1"));
+		add(new JLabel("Player 1(RED)"));
 		add(typeList);
 		add(buttonSelect);
-		add(new JLabel("Player 2"));
+		add(new JLabel("Player 2(BLUE)"));
 		add(typeList2);
 
 		pack();

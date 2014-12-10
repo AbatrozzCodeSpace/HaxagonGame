@@ -110,7 +110,7 @@ public class State {
 	public MyList ownees(String player) {
 		MyList ownees = new MyList();
 
-		if (!(player.equals("red") || player.equals("blue")))
+		if (!(player == null || player.equals("red") || player.equals("blue")  ))
 			return null;
 
 		// Iterate over all Hexpos's
@@ -118,7 +118,7 @@ public class State {
 		Iterator it = set.iterator();
 		while (it.hasNext()) {
 			Hexpos hp = (Hexpos) it.next();
-			if (owner.get(hp) != null && owner.get(hp).equals(player))
+			if (owner.containsKey(hp) && owner.get(hp) == player)
 				ownees.add(hp);
 		}
 
@@ -382,6 +382,36 @@ public class State {
 	
 
 	/* paint a state */
+
+	public void fill(MyList blankPos,String stillWalking,Board board){
+		Set set = owner.keySet();
+		Iterator it = set.iterator();
+		int[][] binds = new int[17][9];
+		for (int[] row : binds)
+			Arrays.fill(row, -1);
+		while (it.hasNext()) {
+
+			Hexpos hp = (Hexpos) it.next();
+			if (owner.get(hp) != null) {
+				System.out.println(hp);
+				if (owner.get(hp).equals("red")) {
+					binds[hp.row() - 1][hp.col() - 1] = Hexxagon.RED;
+				} else if (owner.get(hp).equals("blue")) {
+					binds[hp.row() - 1][hp.col() - 1] = Hexxagon.BLUE;
+				} else
+					binds[hp.row() - 1][hp.col() - 1] = Hexxagon.BLANK;
+			}
+		}
+		
+
+		for(Object tmp : blankPos){
+			Hexpos bs = (Hexpos)tmp;
+			binds[bs.row()-1][bs.col()-1] = stillWalking.equals("red")? Hexxagon.RED:Hexxagon.BLUE;
+		}
+		
+		board.updateBoard(binds);
+		
+	}
 	public void paint(Board board) {
 
 		// Iterate over all Hexpos's

@@ -100,7 +100,7 @@ public class Hexxagon {
 		case 5:
 			return new MinimaxPlayer(2);
 		case 6:
-			return new ParkMinimaxPlayer(2, 100, 50, 40, 25);
+			return new ParkMinimaxPlayer(2, 100, 80, 60, 35);
 		case 7:
 			return new MonteCarloPlayer(0,1000);
 		case 8:
