@@ -4,17 +4,20 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,9 +30,9 @@ public class Board extends JFrame {
 	private static final int start = 50;
 	private static final int r = 40;
 	public static final Color teamColor[] = { Color.red, Color.blue };
-	public static final Color adjColor[] = { new Color(1.0f, 1.0f, 1.0f, 0.3f), //Transparent White
-												new Color(200,8,255,125),
-												new Color(250,126,250,125) };
+	public static final Color adjColor[] = { new Color(1.0f, 1.0f, 1.0f, 0.3f), // Transparent
+																				// White
+			new Color(200, 8, 255, 125), new Color(250, 126, 250, 125) };
 
 	private JPanel boardPanel;
 	private JLabel redScore;
@@ -41,15 +44,15 @@ public class Board extends JFrame {
 
 	private LinkedList<Hex> hexList = new LinkedList<Hex>();
 	private State state;
-	
+
 	private static Move move;
-	private ImageIcon bgIcon = new ImageIcon(getClass().getResource(
-			"Pic/space_800_700.png"));
+
+	private BufferedImage bgImage;
 	private ImageIcon blueBall = new ImageIcon(getClass().getResource(
 			"Pic/WaterBall.png"));
 	private ImageIcon redBall = new ImageIcon(getClass().getResource(
 			"Pic/FireBall.png"));
-	
+
 	private ImageIcon blueStar = new ImageIcon(getClass().getResource(
 			"Pic/star_blue.png"));
 	private ImageIcon redStar = new ImageIcon(getClass().getResource(
@@ -58,13 +61,17 @@ public class Board extends JFrame {
 			"Pic/bar_red.png"));
 	private ImageIcon blueBar = new ImageIcon(getClass().getResource(
 			"Pic/bar_blue.png"));
-	
+
 	private int scoreR;
 	private int scoreB;
-	
+
 	public Board(int size, State state, HaxagonUI ui) {
+		 bgImage = null;
+		try {
+			bgImage = ImageIO.read(new File("src\\Pic\\space_800_700.png"));
+		} catch (IOException e) {
+		}
 		setResizable(false);
-		getContentPane().add(new JLabel(bgIcon));
 		setTitle("Haxagon");
 		this.state = state;
 		firstFrame = ui;
@@ -96,27 +103,32 @@ public class Board extends JFrame {
 		boardPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponents(g);
+				g.drawImage(bgImage,0,0,null);
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setStroke(new BasicStroke(3));
+				Hexpos[] lastMove = getGameState().getLastHexpos();
 				for (Hex h : hexList) {
-					g.setColor(h.getBg()); // color for background
-				g.fillPolygon(h);
+					if(lastMove[0] != null && (h.equal(lastMove[0]) || h.equal(lastMove[1])))
+						g.setColor(Color.orange);
+					else
+						g.setColor(h.getBg()); // color for background
+					g.fillPolygon(h);
 					g.setColor(Color.black); // color for line
 					g.drawPolygon(h);
 					int value = h.getValue();
-					if(value < 1)
+					if (value < 1)
 						continue;
 					try {
 						if (value == 1) {
 							int offsetx = 40;
 							int offsety = 29;
-							g.drawImage(redBall.getImage(), h.getxCenter() - offsetx,
-									h.getyCenter() - offsety, null);
+							g.drawImage(redBall.getImage(), h.getxCenter()
+									- offsetx, h.getyCenter() - offsety, null);
 						} else if (value == 2) {
 							int offsetx = 34;
 							int offsety = 32;
-							g.drawImage(blueBall.getImage(), h.getxCenter() - offsetx,
-									h.getyCenter() - offsety, null);
+							g.drawImage(blueBall.getImage(), h.getxCenter()
+									- offsetx, h.getyCenter() - offsety, null);
 						}
 					} catch (NullPointerException e) {
 						int r = 25;
@@ -130,22 +142,23 @@ public class Board extends JFrame {
 				}
 			}
 		};
+		
 		// add label for score
 		scoreR = 3;
 		scoreB = 3;
 		boardPanel.setLayout( null );
 		redScore = new JLabel( redStar );
 		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );
+
 		try {
-			 f = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File("src\\Font\\space age.ttf"))).deriveFont(Font.PLAIN,48);
+			f = Font.createFont(Font.TRUETYPE_FONT,
+					new FileInputStream(new File("src\\Font\\space age.ttf")))
+					.deriveFont(Font.PLAIN, 48);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (FontFormatException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		redScore.setText("");
@@ -155,10 +168,10 @@ public class Board extends JFrame {
 		redScore.setHorizontalAlignment(SwingConstants.CENTER);
 		redScore.setVerticalTextPosition(SwingConstants.CENTER);
 		redScore.setVerticalAlignment(SwingConstants.CENTER);
-		boardPanel.add( redScore );
-		redScore.setBounds( 50, 550 ,120,100);
-		
-		blueScore = new JLabel( blueStar );
+		boardPanel.add(redScore);
+		redScore.setBounds(50, 550, 120, 100);
+
+		blueScore = new JLabel(blueStar);
 		blueScore.setFont(f);
 		blueScore.setForeground(Color.black);
 		blueScore.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -189,6 +202,7 @@ public class Board extends JFrame {
 		blueBarIndicator.setVerticalAlignment(SwingConstants.CENTER);
 		boardPanel.add( blueBarIndicator );
 		blueBarIndicator.setBounds( 800-247, 25 ,247,55);
+
 		// ------------- END DRAW ON PANEL -------------
 
 		// ------------- ADD MOUSE ACTION -------------
@@ -198,34 +212,40 @@ public class Board extends JFrame {
 			public void mousePressed(MouseEvent m) {
 				State s = getGameState();
 				Point p = m.getPoint();
-				int whose = s.whoseTurn().equals("red") ? 1 : 2; // if it's red's turn, value goes to 1, else 2
+				int whose = s.whoseTurn().equals("red") ? 1 : 2; // if it's
+																	// red's
+																	// turn,
+																	// value
+																	// goes to
+																	// 1, else 2
 				for (int i = 0; i < hexList.size(); i++) {
 					Hex h1 = hexList.get(i);
 					if (h1.contains(p)) {
-						if(h1.getBg().equals(adjColor[0])) {
-							if ( h1.getValue() == -1 || whose != h1.getValue() ) return;
+						if (h1.getBg().equals(adjColor[0])) {
+							if (h1.getValue() == -1 || whose != h1.getValue())
+								return;
 							for (Hex h : hexList) {
-								h.setBg(adjColor[0] );
+								h.setBg(adjColor[0]);
 							}
-							System.out.println("selected "+h1 + "value = " + h1.getValue());
+							System.out.println("selected " + h1 + "value = "
+									+ h1.getValue());
 							selected = h1;
 							for (Hex h2 : hexList) {
 								int distance = distance(h1, h2);
 								if (distance < 3) {
-									if ( h2.getValue() == -1 ) {
+									if (h2.getValue() == -1) {
 										h2.setBg(adjColor[distance]);
 									}
-									if ( distance == 0 ) {
+									if (distance == 0) {
 										h2.setBg(Color.getHSBColor(0, 0, 0.2f));
 									}
 								}
 							}
 						} else {
 							s = getGameState();
-							move = new Move(new Hexpos(selected.getI()+1, selected.getJ()+1),
-									 new Hexpos(h1.getI()+1, h1.getJ()+1),
-									 s.whoseTurn());
-							
+							move = new Move(selected.convertToHexpos(), h1.convertToHexpos(),
+									s.whoseTurn());
+
 							if (s.legalMove(move)) {
 								System.out.println("move " + selected + " to "
 										+ h1);
@@ -239,8 +259,9 @@ public class Board extends JFrame {
 							selected = null;
 							for (Hex h : hexList)
 								h.setBg(adjColor[0]);
+							
 						}
-						
+
 						break;
 					}
 				}
@@ -262,22 +283,23 @@ public class Board extends JFrame {
 		KeyListener l = new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				
+
 			}
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_R && e.isControlDown()) {
+				if (e.getKeyCode() == KeyEvent.VK_R && e.isControlDown()) {
 					Arbiter.reset();
 					Hexxagon.arbiThread.interrupt();
 				}
 			}
 		};
 		boardPanel.addKeyListener(l);
-		
+
 		add(firstFrame);
 		setBackground(Color.darkGray);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -291,14 +313,14 @@ public class Board extends JFrame {
 		for (Hex h : hexList) {
 			h.setValue(state[h.getI()][h.getJ()]);
 		}
-		getContentPane().add(new JLabel(bgIcon));
+
 		repaint();
 	}
-	
-	public void setScore( int red, int blue ) {
+
+	public void setScore(int red, int blue) {
 		scoreR = red;
 		scoreB = blue;
-		redScore.setText( "" + scoreR);
+		redScore.setText("" + scoreR);
 		blueScore.setText("" + scoreB);
 	}
 
@@ -313,19 +335,19 @@ public class Board extends JFrame {
 			return (Math.abs(j1 - j2) + Math.abs(i2 - i1)) / 2;
 		}
 	}
-	
+
 	public State getGameState() {
 		return state;
 	}
-	
+
 	public void setGameState(State state) {
 		this.state = state;
 	}
-	
+
 	public static Move getMove() {
 		return move;
 	}
-	
+
 	public void gotoMain() {
 		remove(firstFrame);
 		add(boardPanel);
