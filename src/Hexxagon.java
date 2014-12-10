@@ -94,7 +94,7 @@ public class Hexxagon {
 			public void run() {
 				p1 = getPlayer(ui.getP1());
 				p2 = getPlayer(ui.getP2());
-				arbi = new Arbiter(p1, p2, 100, 100, gameLoop, state, board);
+				arbi = new Arbiter(p1, p2, 700, 700, gameLoop, state, board);
 				arbi.showGame();
 			}
 		});

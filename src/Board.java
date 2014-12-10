@@ -49,7 +49,8 @@ public class Board extends JFrame {
 
 	private static Move move;
 
-	private BufferedImage bgImage;
+	private ImageIcon bgImage = new ImageIcon(getClass().getResource(
+			"Pic/space_800_700.png"));
 	private ImageIcon blueBall = new ImageIcon(getClass().getResource(
 			"Pic/WaterBall.png"));
 	private ImageIcon redBall = new ImageIcon(getClass().getResource(
@@ -69,11 +70,7 @@ public class Board extends JFrame {
 
 
 	public Board(int size, State state, HaxagonUI ui) {
-		 bgImage = null;
-		try {
-			bgImage = ImageIO.read(new File("src\\Pic\\space_800_700.png"));
-		} catch (IOException e) {
-		}
+
 		setResizable(false);
 		setTitle("Haxagon");
 		this.state = state;
@@ -107,7 +104,7 @@ public class Board extends JFrame {
 		boardPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponents(g);
-				g.drawImage(bgImage,0,0,null);
+				g.drawImage(bgImage.getImage(),0,0,null);
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setStroke(new BasicStroke(3));
 				Hexpos[] lastMove = getGameState().getLastHexpos();
