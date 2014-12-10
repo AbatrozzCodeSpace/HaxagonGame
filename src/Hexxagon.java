@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /* Liesbeth Flobbe
  * Hexxagon game
  * file: Hexxagon.java
@@ -24,25 +26,89 @@ public class Hexxagon {
 	
 	
 	public static void main(String args[]) {
-		hexxThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				state = new State();
-				ui = new HaxagonUI();
-				board = new Board(5, state, ui);
-				synchronized (state) {
-					try {
-						state.wait();
-					} catch (InterruptedException e) {
+		if(args.length == 0){
+			hexxThread = new Thread(new Runnable() {
+				@Override
+				
+				public void run() {
+					state = new State();
+					ui = new HaxagonUI();
+					board = new Board(5, state, ui);
+					synchronized (state) {
+						try {
+							state.wait();
+						} catch (InterruptedException e) {
+						}
+					}
+					board.gotoMain();
+					gameLoop = new GameLoopState();
+					System.out.println("P1="+ui.getP1()+" P2="+ui.getP2());
+					runArbi();
+				}
+			});
+			hexxThread.start();
+		}
+	/*	else if(args.length == 3){
+
+			int player1 = Integer.parseInt(args[0]);
+			int player2 = Integer.parseInt(args[1]);
+			int loop = Integer.parseInt(args[2]);
+			HashMap winningPos = new HashMap();
+
+
+			for (int r = 1; r <= 17; r++) { // for every row
+				int c = ((r % 2 == 0) ? 2 : 1); // what col to start?
+				for (; c <= 9; c += 2) {
+					Hexpos h = new Hexpos(r, c);
+					if (h.onBoard()){
+						winningPos.put(h.hashCode(), 0);
+					
 					}
 				}
-				board.gotoMain();
-				gameLoop = new GameLoopState();
-				System.out.println("P1="+ui.getP1()+" P2="+ui.getP2());
-				runArbi();
 			}
-		});
-		hexxThread.start();
+
+			for(int i = 0; i < loop; i++){
+				Player p1 = getPlayer(player1);
+				Player p2 = getPlayer(player2);
+				if(appWin != null) appWin.dispose();
+				appWin = new AppWindow();
+				gameLoop = new GameLoopState();
+				Arbiter a = new Arbiter(p1, p2, 1000, 1000, appWin, gameLoop, false);
+				a.showGamePrint(winningPos);
+			}
+
+
+		
+		}*/
+	}
+
+		
+
+
+	
+	private static Player getPlayer(int choice){
+		
+		switch (choice) {
+		case 1:
+			return  new Human();
+		case 2:
+			return new RandomPlayer();
+		case 3:
+			return new EagerPlayer();
+		case 4:
+			return new MinimaxPlayer(1);
+		case 5:
+			return new MinimaxPlayer(2);
+		case 6:
+			return new ParkMinimaxPlayer(2, 100, 50, 40, 25);
+		case 7:
+			return new MonteCarloPlayer(0,1000);
+		case 8:
+			return new MewPlayer(2);
+		default:
+			return new Human();
+		}
+
 	}
 	
 	public static void runArbi() {
@@ -68,27 +134,5 @@ public class Hexxagon {
 		board.setGameState(state);
 		runArbi();
 	}
-	public static Player getPlayer(int player) {
-		Player p;
-		switch (player) {
-		case 1:
-			p = new Human();
-			break;
-		case 2:
-			p = new RandomPlayer();
-			break;
-		case 3:
-			p = new EagerPlayer();
-			break;
-		case 4:
-			p = new MinimaxPlayer(1);
-			break;
-		case 5:
-			p = new MinimaxPlayer(2);
-			break;
-		default:
-			p = new Human();
-		}
-		return p;
-	}
 }
+

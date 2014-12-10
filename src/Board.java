@@ -86,12 +86,25 @@ public class Board extends JFrame {
 					g.setColor(Color.white); // color for line
 					g.drawPolygon(h);
 					int value = h.getValue();
-					if (value > 0) {
-						g.setColor(teamColor[value - 1]);
+					if(value < 1)
+						continue;
+					try {
+						if (value == 1) {
+							int offsetx = 40;
+							int offsety = 29;
+							g.drawImage(redBall.getImage(), h.getxCenter() - offsetx,
+									h.getyCenter() - offsety, null);
+						} else if (value == 2) {
+							int offsetx = 34;
+							int offsety = 32;
+							g.drawImage(blueBall.getImage(), h.getxCenter() - offsetx,
+									h.getyCenter() - offsety, null);
+						}
+					} catch (NullPointerException e) {
 						int r = 25;
+						g.setColor(teamColor[value - 1]);
 						g.fillOval(h.getxCenter() - r, h.getyCenter() - r,
 								2 * r, 2 * r);
-						
 						g.setColor(Color.black);
 						g.drawOval(h.getxCenter() - r, h.getyCenter() - r,
 								2 * r, 2 * r);

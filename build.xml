@@ -17,4 +17,12 @@
 			classpath="${BIN_DIR}">
 		</java>
 	</target>
+	<target name="test">
+		<java fork="true"
+			args="${red} ${blue} ${loop}"
+			classname="${MAIN_CLASS}"
+			classpath="${BIN_DIR}">
+
+		</java>
+	</target>
 </project>
