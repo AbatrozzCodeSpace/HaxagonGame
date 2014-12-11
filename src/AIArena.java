@@ -11,7 +11,7 @@ public class AIArena {
 	public static void main(String[] args){
 		//ArenaPlayer p1 = new ArenaPlayer(new ParkMinimaxPlayer(2,100,60,48,30),"oldPark");
 		ArenaPlayer p1 = new ArenaPlayer(new ParkMinimaxPlayer(2,100,60,48,30),"oldPark");
-		ArenaPlayer p2 = new ArenaPlayer(new ParkMinimaxPlayer(2,100,71,61,44),"newPark");
+		ArenaPlayer p2 = new ArenaPlayer(new ParkMinimaxPlayer(2,100,67,47,30),"newPark");
 		p1.name = "oldPark";
 		p2.name = "newPark";
 		Player red;
