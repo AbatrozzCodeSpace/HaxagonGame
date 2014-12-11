@@ -1,0 +1,14 @@
+draw : 29 - 29 : 87 turns
+draw : 29 - 29 : 104 turns
+newPark : 27 - 31 : 80 turns
+newPark : 31 - 27 : 81 turns
+oldPark : 34 - 24 : 81 turns
+newPark : 36 - 22 : 81 turns
+newPark : 26 - 32 : 94 turns
+oldPark : 28 - 30 : 86 turns
+newPark : 21 - 37 : 90 turns
+newPark : 32 - 26 : 89 turns
+------- result -----------
+oldPark : 2
+newPark : 6
+draw : 2
