@@ -310,6 +310,10 @@ public class Board extends JFrame {
 				else if (e.getKeyCode() == KeyEvent.VK_T && e.isControlDown()) {
 					Hexxagon.restartApplication();
 				}
+				else if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
+					GameLoopState.isPlaySound=!GameLoopState.isPlaySound;
+					System.out.println("isPlaySound = false");
+				}
 			}
 		};
 		boardPanel.addKeyListener(l);

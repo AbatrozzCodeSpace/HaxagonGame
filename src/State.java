@@ -135,7 +135,6 @@ public class State {
 	/* change ownership of a given hexpos */
 	public boolean changeOwner(String newOwner, Hexpos hp) {
 		String oldOwner = (String) owner.get(hp);
-
 		// check if newOwner is a valid string
 		if (!(newOwner == null || newOwner.equals("red") || newOwner
 				.equals("blue")))
@@ -219,10 +218,12 @@ public class State {
 		while (it.hasNext()) {
 			Hexpos neighbour = (Hexpos) it.next();
 			// only 'change' ownership if the square was not empty
-			if (owner(neighbour) != null)
+			if (owner(neighbour) != null){
 				changeOwner(player, neighbour);
-		}
+			}
 
+		}
+		
 		return true;
 	}
 

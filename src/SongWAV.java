@@ -164,11 +164,12 @@ public void setFilename(String filename) {
 
 public void openEffect(String string) {
 	// TODO Auto-generated method stub
-
+	if(GameLoopState.isPlaySound){
 	this.filename= string;
 	new Thread(this).start();
 	auIndex++;
 	if(auIndex==auline.length)auIndex=0;
+	}
 	}
 }
 

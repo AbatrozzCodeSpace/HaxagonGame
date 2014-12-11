@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 @SuppressWarnings("serial")
 public class HaxagonUI extends JPanel {
@@ -67,7 +69,7 @@ public class HaxagonUI extends JPanel {
 
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameLoopState.effector.openEffect("charge.wav");
+				GameLoopState.effector.openEffect("buttonPressed.wav");
 				try {
 					UIManager.setLookAndFeel(UIManager
 							.getSystemLookAndFeelClassName());
@@ -78,11 +80,10 @@ public class HaxagonUI extends JPanel {
 				popup.setVisible(true);
 			}
 		});
-
 		aboutButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				GameLoopState.effector.openEffect("charge.wav");
+				GameLoopState.effector.openEffect("buttonPressed.wav");
 				JOptionPane
 						.showMessageDialog(
 								null,
@@ -94,7 +95,7 @@ public class HaxagonUI extends JPanel {
 
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameLoopState.effector.openEffect("charge.wav");
+				GameLoopState.effector.openEffect("buttonPressed.wav");
 				String[] choices = { "Yes", "No" };
 				int response = JOptionPane.showOptionDialog(null // Center in
 																	// window.

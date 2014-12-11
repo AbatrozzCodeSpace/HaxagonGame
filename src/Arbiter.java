@@ -115,7 +115,20 @@ public class Arbiter {
 			}
 
 			// apply move
-			if(m!=null)s.applyMove(m);
+			if(m!=null){
+				int currentRed=  s.getnRed();
+				int currentBlue = s.getnBlue();
+				s.applyMove(m);
+				if(s.whoseTurn().equals("blue")){
+					if(s.getnBlue()<currentBlue)GameLoopState.isChangeOwner=true;
+				}
+				else{
+					if(s.getnRed()<currentRed)GameLoopState.isChangeOwner=true;
+				}
+				if(GameLoopState.isChangeOwner)	GameLoopState.effector.openEffect("charge.wav");
+				else GameLoopState.effector.openEffect("move.wav");
+				GameLoopState.isChangeOwner = false;
+			}
 
 			// paint new situation
 			s.paint(board);
