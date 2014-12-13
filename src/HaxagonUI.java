@@ -69,7 +69,7 @@ public class HaxagonUI extends JPanel {
 
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameLoopState.effector.openEffect("buttonPressed.wav");
+				GameLoopState.effector.openEffect("charge.wav");
 				try {
 					UIManager.setLookAndFeel(UIManager
 							.getSystemLookAndFeelClassName());
@@ -83,7 +83,7 @@ public class HaxagonUI extends JPanel {
 		aboutButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				GameLoopState.effector.openEffect("buttonPressed.wav");
+				GameLoopState.effector.openEffect("charge.wav");
 				JOptionPane
 						.showMessageDialog(
 								null,
@@ -95,7 +95,7 @@ public class HaxagonUI extends JPanel {
 
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GameLoopState.effector.openEffect("buttonPressed.wav");
+				GameLoopState.effector.openEffect("charge.wav");
 				String[] choices = { "Yes", "No" };
 				int response = JOptionPane.showOptionDialog(null // Center in
 																	// window.

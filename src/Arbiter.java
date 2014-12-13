@@ -125,7 +125,7 @@ public class Arbiter {
 				else{
 					if(s.getnRed()<currentRed)GameLoopState.isChangeOwner=true;
 				}
-				if(GameLoopState.isChangeOwner)	GameLoopState.effector.openEffect("charge.wav");
+				if(GameLoopState.isChangeOwner)	GameLoopState.effector.openEffect("buttonPressed.wav");
 				else GameLoopState.effector.openEffect("move.wav");
 				GameLoopState.isChangeOwner = false;
 			}
@@ -146,7 +146,7 @@ public class Arbiter {
 		int blueScore = s.getnBlue() + ((stillWalking == "blue")?s.getnEmpty():0);
 		board.setScore(redScore,blueScore);
 		board.setPlayer(s.whoseTurn().equals("red") ? 1 : 2 );
-		String winner = redScore > blueScore ? "Red is the winner!" : (blueScore==redScore)? "Draw!" : "Blue is the winner!";
+		String winner = redScore > blueScore ? "Red "+Hexxagon.getPlayerType(Hexxagon.p1Type)+" is the winner!" : (blueScore==redScore)? "Draw!" : "Blue "+Hexxagon.getPlayerType(Hexxagon.p2Type)+" is the winner!";
 
 		System.err.println(s.whoseTurn()
 				+ " did not produce a legal move. Ending game.");

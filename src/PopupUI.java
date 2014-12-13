@@ -38,7 +38,7 @@ public class PopupUI extends JFrame {
 				"3. EagerPlayer (picks best move, but does not look ahead",
 				"4. MinimaxPlayer, look ahead one move",
 				"5. MinimaxPlayer, look ahead two moves",
-				"6. ParkMinimaxPlayer", "7. MonteCarloPlayer","8. MewPlayer","9. MickPlayer","10. PruningParkMinimaxPlayer" };
+				"6. ParkKawinSarinNuttapongMinimaxPlayer", "7. MonteCarloPlayer","8. MewPlayer","9. MickPlayer","10. PruningParkKawinSaMinimax" };
 
 		// create a combo box with items specified in the String array:
 		final JComboBox<String> typeList = new JComboBox<String>(bookTitles);
