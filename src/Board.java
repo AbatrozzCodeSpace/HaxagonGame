@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
@@ -160,18 +161,17 @@ public class Board extends JFrame {
 		boardPanel.setLayout( null );
 		redScore = new JLabel( redStar );
 		Font f = new Font(Font.SERIF, Font.PLAIN, 32 );
-
+		URL url = getClass().getResource("Font/space age.ttf");
 		try {
-			f = Font.createFont(Font.TRUETYPE_FONT,
-					new FileInputStream(new File("src\\Font\\space age.ttf")))
-					.deriveFont(Font.PLAIN, 48);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (FontFormatException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+			f= Font.createFont(Font.TRUETYPE_FONT, url.openStream()).deriveFont(Font.PLAIN, 48);;
+		} catch (FontFormatException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
+	
 		redScore.setText("");
 		redScore.setFont(f);
 		redScore.setForeground(Color.white);
